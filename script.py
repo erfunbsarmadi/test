@@ -36,5 +36,5 @@ if __name__ == "__main__":
     sent = send_message(service, "me", msg)
 
     # Example: follow-up on same thread
-    reply = create_message("me", "erfanbs1380@gmail.com", "Re: Daily Update", "This is a reminder!", thread_id = sent["threadId"])
+    reply = create_message("me", "erfanbs1380@gmail.com", "Re: Daily Update", "This is a reminder!", thread_id = sent["threadId"], reply_to_id=sent["id"])
     send_message(service, "me", reply)
