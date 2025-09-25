@@ -3,19 +3,19 @@ import smtplib
 from email.message import EmailMessage
 
 # Get credentials from environment variables
-email_address = os.getenv("ACADEMIC_EMAIL")
+email_address = os.getenv("EMAIL_ADDRESS")
 email_password = os.getenv("EMAIL_PASSWORD")
 
-# Create the email
+# Create email
 msg = EmailMessage()
-msg['Subject'] = "Test Email from Python"
+msg['Subject'] = "Daily Report"
 msg['From'] = email_address
 msg['To'] = "erfanbs1380@gmail.com"
-msg.set_content("Hello, this is a test email sent from Python via Outlook!")
+msg.set_content("Hello! This is a test email sent via Gmail + Python.")
 
-# Connect to Outlook SMTP server
-with smtplib.SMTP('smtp.office365.com', 587) as smtp:
-    smtp.starttls()  # Enable encryption
+# Connect to Gmail SMTP
+with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
+    smtp.starttls()  # Upgrade to secure connection
     smtp.login(email_address, email_password)
     smtp.send_message(msg)
 
