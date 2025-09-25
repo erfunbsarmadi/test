@@ -33,3 +33,7 @@ if __name__ == '__main__':
     msgID = sendMail("erfanbs1380@gmail.com", "Test Email", "Hello from Python + Gmail!", messageID = '')
     print("Email sent successfully!")
     print("Message-ID:", msgID)
+
+    msgID = sendMail("erfanbs1380@gmail.com", "Test Reminder", "Reminder", messageID = msgID)
+    print("Reminder sent successfully!")
+    print("Message-ID:", msgID)
