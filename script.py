@@ -28,8 +28,10 @@ def send_message(service, user_id, body):
 
 if __name__ == "__main__":
     service = get_service_from_files()
-    # Example: send initial email and save threadId
-    sent = send_message(service, 'me', create_message('me', 'erfanbs1380@gmail.com', 'Test API', 'Hello from API!'))
-    print("Official Gmail message id:", sent.get('id'))
-    print("threadId:", sent.get('threadId'))
-    # For follow ups, reuse sent['threadId'] as 'thread_id' in create_message
+    # Example: first email
+    msg = create_message("me", "erfanbs1380@gmail.com", "Daily Update", "Hello from GitHub Actions!")
+    sent = send_message(service, "me", msg)
+
+    # Example: follow-up on same thread
+    reply = create_message("me", "erfanbs1380@gmail.com", "Re: Daily Update", "This is a reminder!", sent["threadId"])
+    send_message(service, "me", reply)
