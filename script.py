@@ -16,10 +16,10 @@ def sendMail(to,subject,content,**kwargs):
     msg["Subject"] = subject
     msg["From"] = email_address
     msg["To"] = to
-    if kwargs["MessageID"] == '':
+    if kwargs["messageID"] == '':
         msg["Message-ID"] = f"<{uuid.uuid4()}@gmail.com>"
     else:
-        msg["Message-ID"] = kwargs["MessageID"]
+        msg["Message-ID"] = kwargs["messageID"]
     msg.set_content(content)
     
     with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
@@ -28,6 +28,6 @@ def sendMail(to,subject,content,**kwargs):
         smtp.send_message(msg)
 
 if __name__ == '__main__':
-    sendMail("erfanbs1380@gmail.com", "Test Email", "Hello from Python + Gmail!", MessageID = '')
+    sendMail("erfanbs1380@gmail.com", "Test Email", "Hello from Python + Gmail!", messageID = '')
     print("Email sent successfully!")
     print("Message-ID:", msg["Message-ID"])
