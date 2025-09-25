@@ -4,6 +4,8 @@ from email.message import EmailMessage
 
 email_address = os.getenv("GMAIL_ADDRESS")
 email_password = os.getenv("GMAIL_APP_PASSWORD")
+print(email_address)
+print(email_password)
 
 if not email_address or not email_password:
     raise ValueError("Missing Gmail credentials. Did you set GitHub Secrets?")
