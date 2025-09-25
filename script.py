@@ -27,7 +27,9 @@ def sendMail(to,subject,content,**kwargs):
         smtp.login(email_address, email_password)
         smtp.send_message(msg)
 
+    return msg["Message-ID"]
+
 if __name__ == '__main__':
-    sendMail("erfanbs1380@gmail.com", "Test Email", "Hello from Python + Gmail!", messageID = '')
+    msgID = sendMail("erfanbs1380@gmail.com", "Test Email", "Hello from Python + Gmail!", messageID = '')
     print("Email sent successfully!")
-    print("Message-ID:", msg["Message-ID"])
+    print("Message-ID:", msgID)
