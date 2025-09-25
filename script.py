@@ -3,7 +3,7 @@ import smtplib
 from email.message import EmailMessage
 import uuid
 
-def sendMail(to,subject,content,**kwargs):
+def sendMail(to,subject,content):
     email_address = os.getenv("GMAIL_ADDRESS")
     email_password = os.getenv("GMAIL_APP_PASSWORD")
     print(email_address)
@@ -16,10 +16,6 @@ def sendMail(to,subject,content,**kwargs):
     msg["Subject"] = subject
     msg["From"] = email_address
     msg["To"] = to
-    if kwargs["messageID"] == '':
-        msg["Message-ID"] = f"<{uuid.uuid4()}@gmail.com>"
-    else:
-        msg["Message-ID"] = kwargs["messageID"]
     msg.set_content(content)
     
     with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
@@ -27,13 +23,7 @@ def sendMail(to,subject,content,**kwargs):
         smtp.login(email_address, email_password)
         smtp.send_message(msg)
 
-    return msg["Message-ID"]
-
 if __name__ == '__main__':
-    msgID = sendMail("erfanbs1380@gmail.com", "Test Email", "Hello from Python + Gmail!", messageID = '')
+    sendMail("erfanbs1380@gmail.com", "Test Email", "Hello from Python + Gmail!")
     print("Email sent successfully!")
-    print("Message-ID:", msgID)
-
-    msgID = sendMail("erfanbs1380@gmail.com", "Test Reminder", "Reminder", messageID = msgID)
-    print("Reminder sent successfully!")
     print("Message-ID:", msgID)
