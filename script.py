@@ -1,6 +1,7 @@
 import os
 import smtplib
 from email.message import EmailMessage
+import uuid
 
 email_address = os.getenv("GMAIL_ADDRESS")
 email_password = os.getenv("GMAIL_APP_PASSWORD")
@@ -14,6 +15,7 @@ msg = EmailMessage()
 msg["Subject"] = "Test Email"
 msg["From"] = email_address
 msg["To"] = "erfanbs1380@gmail.com"
+msg["Message-ID"] = f"<{uuid.uuid4()}@gmail.com>"
 msg.set_content("Hello from Python + Gmail!")
 
 with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
@@ -21,4 +23,6 @@ with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
     smtp.login(email_address, email_password)
     smtp.send_message(msg)
 
-print("Email sent successfully!")
+if __name__ == __main__:
+    print("Email sent successfully!")
+    print("Message-ID:", msg["Message-ID"])
