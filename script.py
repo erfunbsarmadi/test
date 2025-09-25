@@ -39,7 +39,7 @@ if __name__ == "__main__":
     service = get_service()
     
     # --- Step 1: Send first email ---
-    first_email = create_message("me", "recipient@example.com", "Daily Update", "Hello from Gmail API!")
+    first_email = create_message("me", "erfanbs1380@gmail.com", "Daily Update", "Hello from Gmail API!")
     sent_first = send_message(service, first_email)
     print("First email sent. Gmail ID:", sent_first['id'])
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
     # --- Step 3: Send follow-up in same thread ---
     reply_msg = MIMEText("This is a reminder!")
-    reply_msg['to'] = "recipient@example.com"
+    reply_msg['to'] = "erfanbs1380@gmail.com"
     reply_msg['from'] = "me"
     reply_msg['subject'] = "Re: Daily Update"
     reply_msg['In-Reply-To'] = real_message_id
