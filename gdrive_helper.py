@@ -23,17 +23,26 @@ def get_drive_service(credentials_file="credentials.json", token_file="token.jso
 # --------------------------
 # Download file
 # --------------------------
-def download_file(file_id, dest_path, service):
-    request = service.files().get_media(fileId=file_id)
-    fh = io.FileIO(dest_path, "wb")
+def download_file(file_id, file_path, service, mime_type=None):
+    """Download a file from Google Drive. If Google Docs/Sheets, use export."""
+
+    request = None
+
+    if mime_type:  # Export for Docs/Sheets/Slides
+        request = service.files().export_media(fileId=file_id, mimeType=mime_type)
+    else:  # Normal binary file
+        request = service.files().get_media(fileId=file_id)
+
+    fh = io.FileIO(file_path, "wb")
     downloader = MediaIoBaseDownload(fh, request)
 
     done = False
     while not done:
         status, done = downloader.next_chunk()
         if status:
-            print(f"Downloading {dest_path}: {int(status.progress() * 100)}%")
-    print(f"✅ Download complete: {dest_path}")
+            print(f"Downloading {os.path.basename(file_path)}: {int(status.progress() * 100)}%")
+
+    print(f"✅ Download complete: {file_path}")
 
 # --------------------------
 # Upload file
