@@ -60,7 +60,7 @@ def create_reply(to, subject, body_text, thread_id, message_id_header):
     """Create a reply message with proper threading headers."""
     msg = MIMEText(body_text)
     msg["to"] = to
-    msg["subject"] = "Re: " + subject
+    msg["subject"] = subject
     msg["In-Reply-To"] = message_id_header
     msg["References"] = message_id_header
     raw = base64.urlsafe_b64encode(msg.as_bytes()).decode()
