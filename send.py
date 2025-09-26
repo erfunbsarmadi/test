@@ -29,7 +29,7 @@ def send_message(service, user_id, body):
 if __name__ == "__main__":
     service = get_service_from_files()
     # Example: send initial email and save threadId
-    recipient = email_address = os.getenv("RECIPIENT_EMAIL_ADDRESS")
+    recipient = os.getenv("RECIPIENT_EMAIL_ADDRESS")
     sent = send_message(service, 'me', create_message('me', recipient, 'Test API', 'Hello from API!'))
     print("Official Gmail message id:", sent.get('id'))
     print("threadId:", sent.get('threadId'))
