@@ -1,0 +1,31 @@
+name: Send Outlook Email via Microsoft Graph
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *"  # every day at 09:00 UTC
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    env:
+      MSAL_CACHE_JSON: ${{ secrets.MSAL_CACHE_JSON }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install msal requests
+
+      - name: Write MSAL token cache
+        run: echo "$MSAL_CACHE_JSON" > msal_cache.json
+
+      - name: Send email
+        run: python script.py
