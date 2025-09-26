@@ -8,15 +8,15 @@ drive_service = get_drive_service()
 token = get_token()
 
 # Step 1: Download files from Google Drive
-cv_id = "YOUR_CV_FILE_ID"
+cv_id = "1zvBoRn_5hlhoiSuhptqtD6CdrgxlAryg"
 cv = "CV.pdf"
 download_file(cv_id, cv, drive_service)
 
-transcripts_id = "YOUR_TRANSCRIPTS_FILE_ID"
+transcripts_id = "1V7eAd-WWpMCW-NDVbapzKUubyCAzLOZH"
 transcripts = "Transcripts.pdf"
 download_file(transcripts_id, transcripts, drive_service)
 
-emailList_id = "YOUR_EMAILLIST_FILE_ID"
+emailList_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
 emailList = "emailList.xlsx"
 download_file(emailList_id, emailList, drive_service)
 
@@ -32,6 +32,6 @@ send_email(token, recipients, subject, body, attachments=attachment)
 upload_file(emailList, mimetypes.guess_type(emailList)[0], drive_service)
 
 # Step 4: Clean up local copy
-cleanup_file(cv)
-cleanup_file(transcripts)
-cleanup_file(emailList)
+#cleanup_file(cv)
+#cleanup_file(transcripts)
+#cleanup_file(emailList)
