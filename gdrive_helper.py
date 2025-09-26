@@ -44,6 +44,20 @@ def download_file(file_id, file_path, service, mime_type=None):
 
     print(f"✅ Download complete: {file_path}")
 
+def download_google_sheet_as_xlsx(file_id, local_path, service):
+    request = service.files().export_media(
+        fileId=file_id,
+        mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    fh = io.FileIO(local_path, "wb")
+    downloader = MediaIoBaseDownload(fh, request)
+    done = False
+    while not done:
+        status, done = downloader.next_chunk()
+        if status:
+            print(f"Downloading {local_path}: {int(status.progress() * 100)}%")
+    print(f"✅ Downloaded Google Sheet as {local_path}")
+
 # --------------------------
 # Upload file
 # --------------------------
