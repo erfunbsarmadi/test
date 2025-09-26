@@ -8,15 +8,17 @@ drive_service = get_drive_service()
 token = get_token()
 
 # Step 1: Download files from Google Drive
-cv_id = "YOUR_GOOGLE_DRIVE_FILE_ID"
+cv_id = "YOUR_CV_FILE_ID"
 cv = "CV.pdf"
-download_file(pdf_id, local_file, drive_service)
-transcripts_id = "YOUR_GOOGLE_DRIVE_FILE_ID"
+download_file(cv_id, cv, drive_service)
+
+transcripts_id = "YOUR_TRANSCRIPTS_FILE_ID"
 transcripts = "Transcripts.pdf"
-download_file(pdf_id, local_file, drive_service)
-emailList_id = "YOUR_GOOGLE_DRIVE_FILE_ID"
+download_file(transcripts_id, transcripts, drive_service)
+
+emailList_id = "YOUR_EMAILLIST_FILE_ID"
 emailList = "emailList.xlsx"
-download_file(pdf_id, local_file, drive_service)
+download_file(emailList_id, emailList, drive_service)
 
 # Step 2: Send email with attachment
 recipients = ["example@domain.com"]
@@ -27,7 +29,7 @@ attachment = [prepare_attachment(local_file)]
 send_email(token, recipients, subject, body, attachments=attachment)
 
 # Step 3 (optional): Upload processed file back to Drive
-upload_file(emailList, mimetypes.guess_type("processed_report.pdf")[0], drive_service)
+upload_file(emailList, mimetypes.guess_type(emailList)[0], drive_service)
 
 # Step 4: Clean up local copy
 cleanup_file(cv)
