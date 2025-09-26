@@ -21,7 +21,7 @@ emailList = "emailList.xlsx"
 download_file(emailList_id, emailList, drive_service)
 
 # Step 2: Send email with attachment
-recipients = ["example@domain.com"]
+recipients = ["erfanbs1380@gmail.com"]
 subject = "Your Report"
 body = "<p>Hello,<br>Here is your report PDF.</p>"
 
