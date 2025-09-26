@@ -1,4 +1,4 @@
-import base64
+import os, base64
 from email.mime.text import MIMEText
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
