@@ -74,8 +74,8 @@ def send_message(service, body):
 
 if __name__ == "__main__":
     service = get_service()
-    recipient = "erfanbs1380@gmail.com"
-    subject = "githubtest subject"
+    recipient = os.getenv("RECIPIENT_EMAIL_ADDRESS")
+    subject = "Test API"
 
     # Step 1: Locate the conversation across *all* Sent messages
     convo = find_conversation(service, recipient, subject)
