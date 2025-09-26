@@ -17,8 +17,8 @@ transcripts = "Transcripts.pdf"
 download_file(transcripts_id, transcripts, drive_service)
 
 emailList_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
-emailList = "emailList.xlsx"
-download_file(emailList_id, emailList, drive_service)
+emailList = "emailList.csv"
+download_file(emailList_id, emailList, drive_service, mime_type="text/csv")
 
 # Step 2: Send email with attachment
 recipients = ["erfanbs1380@gmail.com"]
