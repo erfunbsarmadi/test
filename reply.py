@@ -14,18 +14,19 @@ def get_service():
     return build("gmail", "v1", credentials=creds)
 
 def get_message_by_id(service, message_id):
-    """Retrieve a single Gmail message by its ID."""
+    """Retrieve a single Gmail message by its ID with proper headers."""
     msg = service.users().messages().get(
         userId="me",
         id=message_id,
-        format="metadata",
-        metadataHeaders=["To", "Subject", "Message-ID"]
+        format="full"  # use full to guarantee headers exist
     ).execute()
 
-    headers = {h["name"]: h["value"] for h in msg["payload"]["headers"]}
+    headers_list = msg.get("payload", {}).get("headers", [])
+    headers = {h["name"]: h["value"] for h in headers_list}
+
     return {
         "id": msg["id"],
-        "threadId": msg["threadId"],
+        "threadId": msg.get("threadId"),
         "to": headers.get("To", ""),
         "subject": headers.get("Subject", ""),
         "messageIdHeader": headers.get("Message-ID")
