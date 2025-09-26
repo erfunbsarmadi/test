@@ -25,7 +25,7 @@ recipients = ["example@domain.com"]
 subject = "Your Report"
 body = "<p>Hello,<br>Here is your report PDF.</p>"
 
-attachment = [prepare_attachment(local_file)]
+attachment = [prepare_attachment(cv), prepare_attachment(transcripts)]
 send_email(token, recipients, subject, body, attachments=attachment)
 
 # Step 3 (optional): Upload processed file back to Drive
