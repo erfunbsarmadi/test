@@ -26,8 +26,10 @@ body = "<p>Hello,<br>Here is your report PDF.</p>"
 attachment = [prepare_attachment(local_file)]
 send_email(token, recipients, subject, body, attachments=attachment)
 
-# Step 3: Clean up local copy
-cleanup_file(local_file)
+# Step 3 (optional): Upload processed file back to Drive
+upload_file(emailList, mimetypes.guess_type("processed_report.pdf")[0], drive_service)
 
-# Step 4 (optional): Upload processed file back to Drive
-upload_file("processed_report.pdf", mimetypes.guess_type("processed_report.pdf")[0], drive_service)
+# Step 4: Clean up local copy
+cleanup_file(cv)
+cleanup_file(transcripts)
+cleanup_file(emailList)
