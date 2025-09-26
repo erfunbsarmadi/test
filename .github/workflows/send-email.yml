@@ -28,4 +28,4 @@ jobs:
         run: echo "$MSAL_CACHE_JSON" > msal_cache.json
 
       - name: Send email
-        run: python script.py
+        run: python main.py
