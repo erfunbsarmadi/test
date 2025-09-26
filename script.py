@@ -100,3 +100,22 @@ def prepare_attachment(file_path):
         "name": os.path.basename(file_path),
         "contentBytes": content,
     }
+
+
+# --------------------------
+# Test
+# --------------------------
+if __name__ == "__main__":
+    token = get_token()
+
+    recipients = ["example@domain.com"]
+    subject = "Report attached"
+    body = "<p>Hello,<br>Here is your PDF report.</p>"
+
+    # Prepare attachments (PDFs you already downloaded from Google Drive)
+    attachments = [
+        prepare_attachment("report1.pdf"),
+        prepare_attachment("report2.pdf"),
+    ]
+
+    send_email(token, recipients, subject, body, attachments=attachments)
