@@ -66,7 +66,7 @@ def send_message(service, body):
 if __name__ == "__main__":
     service = get_service()
     recipient = "erfanbs1380@gmail.com"
-    subject = "Application for Research Assistantship in Surena Project"
+    subject = "githubtest subject"
 
     # Step 1: Locate the conversation
     convo = find_conversation(service, recipient, subject)
