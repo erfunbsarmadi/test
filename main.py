@@ -7,9 +7,15 @@ import mimetypes
 drive_service = get_drive_service()
 token = get_token()
 
-# Step 1: Download PDF(s) from Google Drive
-pdf_id = "YOUR_GOOGLE_DRIVE_FILE_ID"
-local_file = "report.pdf"
+# Step 1: Download files from Google Drive
+cv_id = "YOUR_GOOGLE_DRIVE_FILE_ID"
+cv = "CV.pdf"
+download_file(pdf_id, local_file, drive_service)
+transcripts_id = "YOUR_GOOGLE_DRIVE_FILE_ID"
+transcripts = "Transcripts.pdf"
+download_file(pdf_id, local_file, drive_service)
+emailList_id = "YOUR_GOOGLE_DRIVE_FILE_ID"
+emailList = "emailList.xlsx"
 download_file(pdf_id, local_file, drive_service)
 
 # Step 2: Send email with attachment
