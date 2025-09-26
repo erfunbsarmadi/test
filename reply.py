@@ -26,6 +26,7 @@ def find_conversation(service, recipient, subject):
         ).execute()
 
         messages = results.get("messages", [])
+        print(f"Scanning page, got {len(messages)} messages")
         for m in messages:
             msg = service.users().messages().get(
                 userId="me",
