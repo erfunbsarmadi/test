@@ -13,36 +13,45 @@ def get_service():
     creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     return build("gmail", "v1", credentials=creds)
 
-def find_conversation(service, recipient, subject, max_results=50):
-    """Find a conversation in Sent folder by recipient and subject."""
-    results = service.users().messages().list(
-        userId="me",
-        labelIds=["SENT"],
-        maxResults=max_results
-    ).execute()
+def find_conversation(service, recipient, subject):
+    """Search *all* Sent messages until a match is found."""
+    page_token = None
 
-    messages = results.get("messages", [])
-    for m in messages:
-        msg = service.users().messages().get(
+    while True:
+        results = service.users().messages().list(
             userId="me",
-            id=m["id"],
-            format="metadata",
-            metadataHeaders=["To", "Subject", "Message-ID"]
+            labelIds=["SENT"],
+            maxResults=100,   # max allowed per request
+            pageToken=page_token
         ).execute()
-        headers = {h["name"]: h["value"] for h in msg["payload"]["headers"]}
-        to_addr = headers.get("To", "").lower()
-        subj = headers.get("Subject", "").strip().lower()
-        msg_id_header = headers.get("Message-ID")
 
-        if recipient.lower() in to_addr and subject.lower() in subj:
-            print(f"Found match → To: {to_addr} | Subject: {subj}")
-            return {
-                "id": msg["id"],
-                "threadId": msg["threadId"],
-                "to": to_addr,
-                "subject": subj,
-                "messageIdHeader": msg_id_header
-            }
+        messages = results.get("messages", [])
+        for m in messages:
+            msg = service.users().messages().get(
+                userId="me",
+                id=m["id"],
+                format="metadata",
+                metadataHeaders=["To", "Subject", "Message-ID"]
+            ).execute()
+            headers = {h["name"]: h["value"] for h in msg["payload"]["headers"]}
+            to_addr = headers.get("To", "").lower()
+            subj = headers.get("Subject", "").strip().lower()
+            msg_id_header = headers.get("Message-ID")
+
+            if recipient.lower() in to_addr and subject.lower() in subj:
+                print(f"Found match → To: {to_addr} | Subject: {subj}")
+                return {
+                    "id": msg["id"],
+                    "threadId": msg["threadId"],
+                    "to": to_addr,
+                    "subject": subj,
+                    "messageIdHeader": msg_id_header
+                }
+
+        # Go to next page if available
+        page_token = results.get("nextPageToken")
+        if not page_token:
+            break
 
     print("No matching conversation found.")
     return None
@@ -66,9 +75,9 @@ def send_message(service, body):
 if __name__ == "__main__":
     service = get_service()
     recipient = "erfanbs1380@gmail.com"
-    subject = "githubtest subject"
+    subject = "Research Assistantship Availability Inquiry"
 
-    # Step 1: Locate the conversation
+    # Step 1: Locate the conversation across *all* Sent messages
     convo = find_conversation(service, recipient, subject)
 
     if convo:
