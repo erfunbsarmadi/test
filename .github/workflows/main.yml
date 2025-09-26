@@ -8,6 +8,10 @@ on:
 jobs:
   send:
     runs-on: ubuntu-latest
+    env:  # 👈 put env at the job level
+      GMAIL_CREDENTIALS_JSON: ${{ secrets.GMAIL_CREDENTIALS_JSON }}
+      GMAIL_TOKEN_JSON: ${{ secrets.GMAIL_TOKEN_JSON }}
+      RECIPIENT_EMAIL_ADDRESS: ${{ secrets.RECIPIENT_EMAIL_ADDRESS }}
     steps:
       - uses: actions/checkout@v4
 
@@ -20,14 +24,9 @@ jobs:
         run: pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 
       - name: Write credentials/token files from secrets
-        env:
-          GMAIL_CREDENTIALS_JSON: ${{ secrets.GMAIL_CREDENTIALS_JSON }}
-          GMAIL_TOKEN_JSON: ${{ secrets.GMAIL_TOKEN_JSON }}
-          RECIPIENT_EMAIL_ADDRESS: ${{ secrets.RECIPIENT_EMAIL_ADDRESS }}
         run: |
           echo "$GMAIL_CREDENTIALS_JSON" > credentials.json
           echo "$GMAIL_TOKEN_JSON" > token.json
-          # optional: show basic info (no secrets) to debug
           python -c "import json; print('token scopes:', json.load(open('token.json')).get('scopes'))"
 
       - name: Send first email
