@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install deps
+      - name: Install dependencies
         run: pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 
       - name: Write credentials/token files from secrets
@@ -30,7 +30,7 @@ jobs:
           python -c "import json; print('token scopes:', json.load(open('token.json')).get('scopes'))"
 
       - name: Send first email
-        run: python send.py
+        run: python -u send.py
 
       - name: Send reminders
-        run: python reply.py
+        run: python -u reply.py
