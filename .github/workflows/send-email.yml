@@ -14,8 +14,8 @@ jobs:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL_ADDRESS }}
-      GDRIVE_CREDENTIALS_JSON: ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
-      GDRIVE_TOKEN_JSON: ${{ secrets.GDRIVE_TOKEN_JSON }}
+      GMAIL_CREDENTIALS_JSON: ${{ secrets.GMAIL_CREDENTIALS_JSON }}
+      GMAIL_TOKEN_JSON: ${{ secrets.GMAIL_TOKEN_JSON }}
 
     steps:
       - uses: actions/checkout@v4
@@ -33,8 +33,8 @@ jobs:
       - name: Write credentials from secrets
         run: |
           echo "$MSAL_CACHE_JSON" > msal_cache.json
-          echo "$GDRIVE_CREDENTIALS_JSON" > credentials.json
-          echo "$GDRIVE_TOKEN_JSON" > token.json
+          echo "$GMAIL_CREDENTIALS_JSON" > credentials.json
+          echo "$GMAIL_TOKEN_JSON" > token.json
 
       - name: Send email and process files
         run: python main.py
