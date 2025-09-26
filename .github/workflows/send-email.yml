@@ -12,7 +12,7 @@ jobs:
       MSAL_CACHE_JSON: ${{ secrets.MSAL_CACHE_JSON }}
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+      RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL_ADDRESS }}
     steps:
       - uses: actions/checkout@v4
 
