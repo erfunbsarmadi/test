@@ -88,7 +88,10 @@ def send_email(token, recipients, subject, body, attachments=None, html=True):
 
     if attachments:
         #message["attachments"] = attachments
-        message["attachments"] = map(prepare_attachment, attachments)
+        encoded_attachments = []
+        for file_path in attachments:
+            encoded_attachments.append(prepare_attachment(file_path))
+        message["attachments"] = encoded_attachments
 
     email_msg = {"message": message, "saveToSentItems": "true"}
 
