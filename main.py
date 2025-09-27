@@ -1,5 +1,5 @@
 from sheet_helper import read_sheet, write_sheet
-from outlook_mailer.py import get_token, send_email
+from outlook_mailer import get_token, send_email
 import pandas as pd
 
 # --- Setup ---
