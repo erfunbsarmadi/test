@@ -23,4 +23,4 @@ recipients = ["erfanbs1380@gmail.com"]
 subject = "Report attached"
 body = "<p>Hello,<br>Here is your PDF report.</p>"
 
-send_email(token, recipients, subject, body, attachments = [cv])
+send_email(token, recipients, subject, body, attachments = ['cv.pdf'])
