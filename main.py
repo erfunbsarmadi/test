@@ -8,5 +8,5 @@ creds = drive_service._http.credentials  # reuse creds
 sheet_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
 
 # --- Get recipients ---
-emails = read_sheet(sheet_id, "Sheet1!1:1000")
+emails = read_sheet(sheet_id, "Sheet1!1:1000", creds)
 print(emails)
