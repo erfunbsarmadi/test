@@ -23,7 +23,7 @@ def get_recipients(sheet_id, range_name, creds):
     values = result.get("values", [])
 
     recipients = []
-    start_row = int(range_name.split("!")[1][1:].split(":")[0])  # e.g. A2 -> 2
+    start_row = int(range_name[1:].split(":")[0])  # e.g. A2 -> 2
     for i, row in enumerate(values, start=start_row):
         if row:
             recipients.append((i, row[0]))  # (row_number, email)
