@@ -139,3 +139,14 @@ def write_sheet(
         )
 
     return res
+
+# --------------------------
+# Test
+# --------------------------
+if __name__ == "__main__":
+    sheet_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
+    creds_file = "credentials.json"
+
+    #import pandas as pd
+    df = read_sheet(sheet_id, "Sheet1!1:1000", creds_file)
+    write_sheet(sheet_id, 'Sheet1!A1', df, creds_file)
