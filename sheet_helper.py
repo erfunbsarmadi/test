@@ -4,7 +4,7 @@ from google.oauth2.service_account import Credentials
 # Scopes needed
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-def get_sheets_service(creds_json="credentials.json"):
+def get_sheets_service(creds_json=):
     """
     Create and return a Sheets API service object.
     """
