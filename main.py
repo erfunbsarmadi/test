@@ -1,5 +1,5 @@
 from gdrive_helper import get_drive_service
-from sheet_helper import get_recipients, write_email_status
+from sheet_helper import read_sheet, write_sheet
 from outlook_mailer import get_token, send_email
 
 # --- Setup ---
