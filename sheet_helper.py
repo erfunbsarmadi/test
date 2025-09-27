@@ -4,8 +4,7 @@ def get_sheets_service(creds_json):
     """
     Create and return a Sheets API service object.
     """
-    creds = Credentials.from_service_account_file(creds_json, scopes=SCOPES)
-    return build("sheets", "v4", credentials=creds)
+    return build("sheets", "v4", credentials=creds_json)
 
 
 def read_sheet(spreadsheet_id, range_name, creds_json):
