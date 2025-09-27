@@ -1,17 +1,14 @@
-from gdrive_helper import get_drive_service
 from sheet_helper import read_sheet, write_sheet
-from outlook_mailer import get_token, send_email
 import pandas as pd
 
 # --- Setup ---
-drive_service = get_drive_service()
-creds = drive_service._http.credentials  # reuse creds
 sheet_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
+creds_file = "credentials.json"
 
 # --- Get recipients ---
-df = read_sheet(sheet_id, "Sheet1!1:1000", creds)
+df = read_sheet(sheet_id, "Sheet1!1:1000", creds_file)
 print(df['Email'][0])
-df['Email'][0] = 'erfanbs1380@gmail.com'
+df.loc[0, 'Email'] = 'erfanbs1380@gmail.com'
 print(df['Email'][0])
 
-write_sheet(sheet_id, 'Sheet1!A1', df, creds)
+write_sheet(sheet_id, 'Sheet1!A1', df, creds_file)
