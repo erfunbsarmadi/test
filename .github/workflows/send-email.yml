@@ -32,7 +32,7 @@ jobs:
       - name: Write credentials from secrets
         run: |
           echo "$MSAL_CACHE_JSON" > msal_cache.json
-          echo "$GMAIL_CREDENTIALS_JSON" > credentials.json
+          echo "$NEW_GMAIL_CREDENTIALS_JSON" > credentials.json
           echo "$GMAIL_TOKEN_JSON" > token.json
 
       - name: Send email and process files
