@@ -12,7 +12,7 @@ def get_sheets_service(creds_json="credentials.json"):
     return build("sheets", "v4", credentials=creds)
 
 
-def read_sheet(spreadsheet_id, range_name, creds_json="credentials.json"):
+def read_sheet(spreadsheet_id, range_name, creds_json):
     """
     Read values from a Google Sheet.
     - spreadsheet_id: The ID of the sheet
@@ -25,7 +25,7 @@ def read_sheet(spreadsheet_id, range_name, creds_json="credentials.json"):
     return result.get("values", [])
 
 
-def write_sheet(spreadsheet_id, range_name, values, creds_json="credentials.json"):
+def write_sheet(spreadsheet_id, range_name, values, creds_json):
     """
     Write values to a Google Sheet.
     - spreadsheet_id: The ID of the sheet
