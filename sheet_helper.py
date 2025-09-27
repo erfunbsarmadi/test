@@ -1,4 +1,5 @@
 from googleapiclient.discovery import build
+import pandas as pd
 
 def get_sheets_service(creds_json):
     """
@@ -7,7 +8,7 @@ def get_sheets_service(creds_json):
     return build("sheets", "v4", credentials=creds_json)
 
 
-def read_sheet(spreadsheet_id, range_name, creds_json):
+def read_sheet(spreadsheet_id, range_name, creds_json, header=True):
     """
     Read values from a Google Sheet.
     - spreadsheet_id: The ID of the sheet
@@ -17,7 +18,18 @@ def read_sheet(spreadsheet_id, range_name, creds_json):
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id, range=range_name
     ).execute()
-    return result.get("values", [])
+
+    values = result.get("values", [])
+
+    if not values:
+        return pd.DataFrame()
+
+    if header:
+        df = pd.DataFrame(values[1:], columns=values[0])
+    else:
+        df = pd.DataFrame(values)
+
+    return df
 
 
 def write_sheet(spreadsheet_id, range_name, values, creds_json):
