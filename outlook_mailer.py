@@ -43,6 +43,21 @@ def get_token():
     save_cache(cache)
     return result["access_token"]
 
+# --------------------------
+# Attachment helpers
+# --------------------------
+def prepare_attachment(file_path):
+    """
+    Read a file (e.g. PDF) and prepare it for Microsoft Graph attachment format.
+    """
+    with open(file_path, "rb") as f:
+        content = base64.b64encode(f.read()).decode()
+
+    return {
+        "@odata.type": "#microsoft.graph.fileAttachment",
+        "name": os.path.basename(file_path),
+        "contentBytes": content,
+    }
 
 # --------------------------
 # Email sending
@@ -72,7 +87,8 @@ def send_email(token, recipients, subject, body, attachments=None, html=True):
     }
 
     if attachments:
-        message["attachments"] = attachments
+        #message["attachments"] = attachments
+        message["attachments"] = map(prepare_attachment, attachments)
 
     email_msg = {"message": message, "saveToSentItems": "true"}
 
@@ -83,24 +99,6 @@ def send_email(token, recipients, subject, body, attachments=None, html=True):
         print("✅ Email sent successfully!")
     else:
         print("❌ Failed:", response.status_code, response.text)
-
-
-# --------------------------
-# Attachment helpers
-# --------------------------
-def prepare_attachment(file_path):
-    """
-    Read a file (e.g. PDF) and prepare it for Microsoft Graph attachment format.
-    """
-    with open(file_path, "rb") as f:
-        content = base64.b64encode(f.read()).decode()
-
-    return {
-        "@odata.type": "#microsoft.graph.fileAttachment",
-        "name": os.path.basename(file_path),
-        "contentBytes": content,
-    }
-
 
 # --------------------------
 # Test
