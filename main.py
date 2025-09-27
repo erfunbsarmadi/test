@@ -12,3 +12,11 @@ df.loc[0, 'Email'] = 'erfanbs1380@gmail.com'
 print(df['Email'][0])
 
 write_sheet(sheet_id, 'Sheet1!A1', df, creds_file)
+
+token = get_token()
+
+recipients = ["erfanbs1380@gmail.com"]
+subject = "Report attached"
+body = "<p>Hello,<br>Here is your PDF report.</p>"
+
+send_email(token, recipients, subject, body)
