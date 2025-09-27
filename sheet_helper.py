@@ -30,7 +30,7 @@ def get_recipients(sheet_id, range_name, creds):
 
     return recipients
 
-def write_email_status(sheet_id, row, status, creds, column="B"):
+def write_email_status(sheet_id, row, status, creds, column):
     """
     Write back email info (status/message) to a given row.
 
@@ -39,7 +39,7 @@ def write_email_status(sheet_id, row, status, creds, column="B"):
         row (int): Row number (starting from 1).
         status (str): Info to write (e.g., "Sent ✅").
         creds: Google API credentials.
-        column (str): Column to write into (default "B").
+        column (str): Column to write into.
     """
     service = get_sheet_service(creds)
     range_name = f"Recipients!{column}{row}"
