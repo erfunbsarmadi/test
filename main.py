@@ -1,5 +1,6 @@
 from sheet_helper import read_sheet, write_sheet
 from outlook_mailer import get_token, send_email
+from gdrive_helper import download_file
 import pandas as pd
 
 # --- Setup ---
@@ -14,10 +15,12 @@ print(df['Email'][0])
 
 write_sheet(sheet_id, 'Sheet1!A1', df, creds_file)
 
+cv = download_file('1zvBoRn_5hlhoiSuhptqtD6CdrgxlAryg', 'cv.pdf')
+
 token = get_token()
 
 recipients = ["erfanbs1380@gmail.com"]
 subject = "Report attached"
 body = "<p>Hello,<br>Here is your PDF report.</p>"
 
-send_email(token, recipients, subject, body)
+send_email(token, recipients, subject, body, attachment = cv)
