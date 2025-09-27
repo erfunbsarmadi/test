@@ -1,6 +1,6 @@
 from sheet_helper import read_sheet, write_sheet
 from outlook_mailer import get_token, send_email
-from gdrive_helper import download_file
+from gdrive_helper import download_file, cleanup_file
 import pandas as pd
 
 # --- Setup ---
