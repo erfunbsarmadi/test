@@ -34,7 +34,7 @@ def read_sheet(spreadsheet_id, range_name, creds_json, header=True):
     return df
 
 
-#def write_sheet(spreadsheet_id, range_name, values, creds_json):
+#def write_sheet(spreadsheet_id, range_name, values, creds_json = "credentials.json"):
     """
     Write values to a Google Sheet.
     - spreadsheet_id: The ID of the sheet
@@ -51,7 +51,7 @@ def read_sheet(spreadsheet_id, range_name, creds_json, header=True):
    # ).execute()
    # return result
 
-def write_sheet(spreadsheet_id, range_name, df, creds_json):
+def write_sheet(spreadsheet_id, range_name, df, creds_json = "credentials.json"):
     """
     Write a pandas DataFrame to a Google Sheet.
     - spreadsheet_id: The ID of the sheet
