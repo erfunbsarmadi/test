@@ -21,14 +21,15 @@ def get_recipients(sheet_id, range_name, creds):
         spreadsheetId=sheet_id, range=range_name
     ).execute()
     values = result.get("values", [])
+    return values
+    
+    #recipients = []
+    #start_row = int(range_name[1:].split(":")[0])  # e.g. A2 -> 2
+    #for i, row in enumerate(values, start=start_row):
+    #    if row:
+    #        recipients.append((i, row[0]))  # (row_number, email)
 
-    recipients = []
-    start_row = int(range_name[1:].split(":")[0])  # e.g. A2 -> 2
-    for i, row in enumerate(values, start=start_row):
-        if row:
-            recipients.append((i, row[0]))  # (row_number, email)
-
-    return recipients
+    #return recipients
 
 def write_email_status(sheet_id, row, status, creds, column):
     """
