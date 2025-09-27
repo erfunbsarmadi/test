@@ -1,29 +1,12 @@
-from gdrive_helper import get_drive_service, download_file, upload_file, cleanup_file
-from outlook_mailer import get_token, send_email, prepare_attachment
+from gdrive_helper import get_drive_service
+from sheet_helper import get_recipients, write_email_status
+from outlook_mailer import get_token, send_email
 
-import mimetypes
-
-# Initialize services
+# --- Setup ---
 drive_service = get_drive_service()
-token = get_token()
+creds = drive_service._http.credentials  # reuse creds
+sheet_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
 
-# Step 1: Download files from Google Drive
-cv_id = "1zvBoRn_5hlhoiSuhptqtD6CdrgxlAryg"
-cv = "CV.pdf"
-download_file(cv_id, cv, drive_service)
-
-transcripts_id = "1V7eAd-WWpMCW-NDVbapzKUubyCAzLOZH"
-transcripts = "Transcripts.pdf"
-download_file(transcripts_id, transcripts, drive_service)
-
-# Step 2: Send email with attachment
-recipients = ["erfanbs1380@gmail.com"]
-subject = "Your Report"
-body = "<p>Hello,<br>Here is your report PDF.</p>"
-
-attachment = [prepare_attachment(cv), prepare_attachment(transcripts)]
-send_email(token, recipients, subject, body, attachments=attachment)
-
-# Step 3: Clean up local copy
-cleanup_file(cv)
-cleanup_file(transcripts)
+# --- Get recipients ---
+recipients = get_recipients(sheet_id, "Recipients!B2:B", creds)
+print("📧 Recipients:", recipients)
