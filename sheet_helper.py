@@ -32,14 +32,35 @@ def read_sheet(spreadsheet_id, range_name, creds_json, header=True):
     return df
 
 
-def write_sheet(spreadsheet_id, range_name, values, creds_json):
+#def write_sheet(spreadsheet_id, range_name, values, creds_json):
     """
     Write values to a Google Sheet.
     - spreadsheet_id: The ID of the sheet
     - range_name: e.g. "Sheet1!C2:D2"
     - values: list of lists, e.g. [["Sent", "2025-09-27"]]
     """
+   # service = get_sheets_service(creds_json)
+   # body = {"values": values}
+   # result = service.spreadsheets().values().update(
+   #     spreadsheetId=spreadsheet_id,
+    #    range=range_name,
+    #    valueInputOption="RAW",
+    #    body=body
+   # ).execute()
+   # return result
+
+def write_sheet(spreadsheet_id, range_name, df, creds_json):
+    """
+    Write a pandas DataFrame to a Google Sheet.
+    - spreadsheet_id: The ID of the sheet
+    - range_name: e.g. "Sheet1!A1"
+    - df: pandas DataFrame to write
+    """
     service = get_sheets_service(creds_json)
+
+    # Convert DataFrame to list of lists, including headers
+    values = [df.columns.tolist()] + df.astype(str).values.tolist()
+
     body = {"values": values}
     result = service.spreadsheets().values().update(
         spreadsheetId=spreadsheet_id,
@@ -47,4 +68,6 @@ def write_sheet(spreadsheet_id, range_name, values, creds_json):
         valueInputOption="RAW",
         body=body
     ).execute()
+
+    print(f"✅ Wrote {len(values)-1} rows and {len(values[0])} columns to {range_name}")
     return result
