@@ -21,7 +21,8 @@ def get_recipients(sheet_id, range_name, creds):
         spreadsheetId=sheet_id, range=range_name
     ).execute()
     values = result.get("values", [])
-    return values
+    
+    return values[0]
     
     #recipients = []
     #start_row = int(range_name[1:].split(":")[0])  # e.g. A2 -> 2
