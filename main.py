@@ -15,7 +15,7 @@ print(df['Email'][0])
 
 write_sheet(sheet_id, 'Sheet1!A1', df, creds_file)
 
-cv = download_file('1zvBoRn_5hlhoiSuhptqtD6CdrgxlAryg', 'cv.pdf')
+download_file('1zvBoRn_5hlhoiSuhptqtD6CdrgxlAryg', 'cv.pdf')
 
 token = get_token()
 
@@ -24,3 +24,5 @@ subject = "Report attached"
 body = "<p>Hello,<br>Here is your PDF report.</p>"
 
 send_email(token, recipients, subject, body, attachments = ['cv.pdf'])
+
+cleanup_file('cv.pdf')
