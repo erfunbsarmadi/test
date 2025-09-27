@@ -1,8 +1,16 @@
 from googleapiclient.discovery import build
+from google.oauth2.service_account import Credentials
 
-def get_sheet_service(creds):
-    """Return an authorized Sheets API service."""
+# Scopes needed
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+
+def get_sheets_service(creds_json="credentials.json"):
+    """
+    Create and return a Sheets API service object.
+    """
+    creds = Credentials.from_service_account_file(creds_json, scopes=SCOPES)
     return build("sheets", "v4", credentials=creds)
+
 
 def read_sheet(spreadsheet_id, range_name, creds_json="credentials.json"):
     """
@@ -10,7 +18,7 @@ def read_sheet(spreadsheet_id, range_name, creds_json="credentials.json"):
     - spreadsheet_id: The ID of the sheet
     - range_name: e.g. "Sheet1!A2:B10"
     """
-    service = get_sheet_service(creds_json)
+    service = get_sheets_service(creds_json)
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id, range=range_name
     ).execute()
@@ -24,7 +32,7 @@ def write_sheet(spreadsheet_id, range_name, values, creds_json="credentials.json
     - range_name: e.g. "Sheet1!C2:D2"
     - values: list of lists, e.g. [["Sent", "2025-09-27"]]
     """
-    service = get_sheet_service(creds_json)
+    service = get_sheets_service(creds_json)
     body = {"values": values}
     result = service.spreadsheets().values().update(
         spreadsheetId=spreadsheet_id,
