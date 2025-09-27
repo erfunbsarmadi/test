@@ -22,13 +22,13 @@ def read_sheet(spreadsheet_id, range_name, creds_json, header=True):
     values = result.get("values", [])
 
     if not values:
-        return pd.DataFrame()
+        return pd.DataFrame()  # empty sheet → empty df
 
-    if header:
-        df = pd.DataFrame(values[1:], columns=values[0])
-    else:
-        df = pd.DataFrame(values)
+    # Normalize row lengths to match header length
+    header = values[0]
+    normalized_rows = [row + [""] * (len(header) - len(row)) for row in values[1:]]
 
+    df = pd.DataFrame(normalized_rows, columns=header)
     return df
 
 
