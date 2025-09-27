@@ -13,3 +13,5 @@ df = read_sheet(sheet_id, "Sheet1!1:1000", creds)
 print(df['Email'][0])
 df['Email'][0] = 'erfanbs1380@gmail.com'
 print(df['Email'][0])
+
+write_sheet(sheet_id, 'Sheet1!A1:K2', df, creds)
