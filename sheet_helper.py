@@ -1,8 +1,4 @@
 from googleapiclient.discovery import build
-from google.oauth2.service_account import Credentials
-
-# Scopes needed
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
 def get_sheets_service(creds_json):
     """
