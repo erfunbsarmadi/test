@@ -4,7 +4,7 @@ def get_sheet_service(creds):
     """Return an authorized Sheets API service."""
     return build("sheets", "v4", credentials=creds)
 
-def get_recipients(sheet_id, range_name, creds):
+def get_data(sheet_id, range_name, creds):
     """
     Read recipient emails from a Google Sheet.
 
