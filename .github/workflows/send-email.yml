@@ -14,7 +14,7 @@ jobs:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL_ADDRESS }}
-      GMAIL_CREDENTIALS_JSON: ${{ secrets.GMAIL_CREDENTIALS_JSON }}
+      NEW_GMAIL_CREDENTIALS_JSON: ${{ secrets.NEW_GMAIL_CREDENTIALS_JSON }}
       #GMAIL_TOKEN_JSON: ${{ secrets.GMAIL_TOKEN_JSON }}
 
     steps:
