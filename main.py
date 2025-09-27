@@ -10,4 +10,4 @@ sheet_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
 
 # --- Get recipients ---
 df = read_sheet(sheet_id, "Sheet1!1:1000", creds)
-print(df)
+print(df['Email'])
