@@ -23,8 +23,7 @@ def get_drive_service(credentials_file="credentials.json", token_file="token.jso
 # --------------------------
 # Download file
 # --------------------------
-def download_file(file_id, file_path, mime_type=None):
-    service = get_drive_service()
+def download_file(file_id, file_path, service, mime_type=None):
     request = service.files().get_media(fileId=file_id)
 
     fh = io.FileIO(file_path, "wb")
