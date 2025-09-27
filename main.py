@@ -8,5 +8,7 @@ creds = drive_service._http.credentials  # reuse creds
 sheet_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
 
 # --- Get recipients ---
-recipients = get_recipients(sheet_id, "1:1", creds)
+keys = get_data(sheet_id, "1:1", creds)
+values = list(map(chr,range(65,65+len(keys)))
+columns = dict(zip(keys,values))
 print("📧 Recipients:", recipients)
