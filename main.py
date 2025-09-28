@@ -14,10 +14,17 @@ df = read_sheet(sheet_id, "Sheet1!1:1000", creds_file)
 token = get_token()
 
 #prepare email
-df['Email Body'][0]=compose_email(df['Professor Name'][0], df['Abstract'][0])
-print(clarity_check(df['Email Body'][0]))
-df['Subject'][0]=suggest_subject(df['Email Body'][0])
-print(clarity_check(df['Subject'][0]))
+clarity_check_result = 'Negative'
+while clarity_check_result != 'Positive':
+    df['Email Body'][0]=compose_email(df['Professor Name'][0], df['Abstract'][0])
+    clarity_check_result = clarity_check(df['Email Body'][0])
+    print(clarity_check_result)
+
+clarity_check_result = 'Negative'
+while clarity_check_result != 'Positive':
+    df['Subject'][0]=suggest_subject(df['Email Body'][0])
+    clarity_check_result = clarity_check(df['Subject'][0])
+    print(clarity_check_result)
 
 #check email
 #suggest subject
