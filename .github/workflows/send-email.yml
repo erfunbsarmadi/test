@@ -17,6 +17,7 @@ jobs:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       EMAIL_BODY: ${{ secrets.EMAIL_BODY }}
       COMPOSITION_PROMPT: ${{ secrets.COMPOSITION_PROMPT }}
+      SUBJECT_SUGGESTION: ${{ secrets.SUBJECT_SUGGESTION }}
 
     steps:
       - uses: actions/checkout@v4
