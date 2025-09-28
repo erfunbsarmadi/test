@@ -14,6 +14,9 @@ jobs:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       NEW_GMAIL_CREDENTIALS_JSON: ${{ secrets.NEW_GMAIL_CREDENTIALS_JSON }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      EMAIL_BODY: ${{ secrets.EMAIL_BODY }}
+      COMPOSITION_PROMPT: ${{ secrets.COMPOSITION_PROMPT }}
 
     steps:
       - uses: actions/checkout@v4
