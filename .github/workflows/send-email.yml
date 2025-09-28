@@ -19,6 +19,7 @@ jobs:
       COMPOSITION_PROMPT: ${{ secrets.COMPOSITION_PROMPT }}
       SUBJECT_SUGGESTION: ${{ secrets.SUBJECT_SUGGESTION }}
       COMPOSE_REMINDER: ${{ secrets.COMPOSE_REMINDER }}
+      CLARITY_PROMPT: ${{ secrets.CLARITY_PROMPT }}
 
     steps:
       - uses: actions/checkout@v4
