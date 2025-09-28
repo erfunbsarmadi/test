@@ -42,3 +42,15 @@ def compose_reminder(emailBody):
     )
     
     return response.text
+
+def clarity_check(text):
+    client = genai.Client()
+    prompt = os.getenv("CLARITY_PROMPT")
+    contents = prompt + '\n' + text
+    
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=contents
+    )
+    
+    return response.text
