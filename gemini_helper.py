@@ -15,3 +15,17 @@ def compose_email(lastName, abstract):
     )
     
     return response.text
+
+
+def suggest_subject(emailBody):
+    
+    client = genai.Client()
+    prompt = os.getenv("SUBJECT_SUGGESTION")
+    contents = os.getenv("SUBJECT_SUGGESTION") + '\n' + emailBody
+    
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=contents
+    )
+    
+    return response.text
