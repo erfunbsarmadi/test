@@ -1,6 +1,7 @@
 from sheet_helper import read_sheet, write_sheet
 from outlook_mailer import get_token, send_email
 from gdrive_helper import download_file, cleanup_file
+from gemini_helper import compose_email
 import pandas as pd
 
 # --- Setup ---
@@ -13,21 +14,21 @@ df = read_sheet(sheet_id, "Sheet1!1:1000", creds_file)
 token = get_token()
 
 #prepare email
-
+df['Email Body'][0]=compose_email(df['Professor Name'][0], df['Abstract'][0])
 
 
 #check email
 #suggest subject
 #check subject
 
-download_file('1zvBoRn_5hlhoiSuhptqtD6CdrgxlAryg', 'cv.pdf')
+#download_file('1zvBoRn_5hlhoiSuhptqtD6CdrgxlAryg', 'cv.pdf')
 
 
 
 
 
-send_email(token, recipients, subject, body, attachments = ['cv.pdf'])
+#send_email(token, recipients, subject, body, attachments = ['cv.pdf'])
 
 
 write_sheet(sheet_id, 'Sheet1!A1', df, creds_file)
-cleanup_file('cv.pdf')
+#cleanup_file('cv.pdf')
