@@ -1,15 +1,17 @@
+import os
 from google import genai
 
-client = genai.Client()
-
 def compose_email(lastName, abstract):
-
     
-    contact = 'Dear Professor' + lastName
-
+    client = genai.Client()
+    prompt = os.getenv("COMPOSITION_PROMPT")
+    body = os.getenv("EMAIL_BODY")
+    contact = 'Dear Professor' + lastName + ','
+    contents = prompt + '\n' + contact + '\n' + body + '\n' + abstract
+    
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents="Explain how AI works in a few words"
+        contents=contents
     )
     
-    print(response.text)
+    return response.text
