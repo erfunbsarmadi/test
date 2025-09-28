@@ -1,7 +1,7 @@
 from sheet_helper import read_sheet, write_sheet
 from outlook_mailer import get_token, send_email
 from gdrive_helper import download_file, cleanup_file
-from gemini_helper import compose_email, suggest_subject
+from gemini_helper import compose_email, suggest_subject, clarity_check
 import pandas as pd
 
 # --- Setup ---
@@ -15,7 +15,9 @@ token = get_token()
 
 #prepare email
 df['Email Body'][0]=compose_email(df['Professor Name'][0], df['Abstract'][0])
+print(clarity_check(df['Email Body'][0]))
 df['Subject'][0]=suggest_subject(df['Email Body'][0])
+print(clarity_check(df['Subject'][0]))
 
 #check email
 #suggest subject
