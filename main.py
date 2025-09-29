@@ -67,7 +67,7 @@ elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Dat
         date = datetime.datetime.now()
         df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
         df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
-        df['Email Body'][i] = 'Reminder ' + str(df['Reminders Sent'][i]) + ':\n' + text
+        df['Email Body'][i] = df['Email Body'][i] + '\nReminder ' + str(df['Reminders Sent'][i]) + ':\n' + text
         
         while True:
             delta = randint(7,14)
