@@ -2,6 +2,7 @@ import os
 import base64
 import msal
 import requests
+from gdrive_helper import download_file, cleanup_file
 
 # === Authentication config ===
 CLIENT_ID = os.getenv("AZURE_CLIENT_ID")
@@ -86,11 +87,17 @@ def send_email(token, recipients, subject, body, attachments=None, html=True):
         "toRecipients": to_list,
     }
 
+    filesDict = {
+        "CV": "1zvBoRn_5hlhoiSuhptqtD6CdrgxlAryg",
+        "BSc Transcripts": "1V7eAd-WWpMCW-NDVbapzKUubyCAzLOZH",
+        "MSc Transcripts": "1KVpM6FPe9c1saYdtLA89CLvjq_U76YZR",
+    }
+
     if attachments:
-        #message["attachments"] = attachments
         encoded_attachments = []
-        for file_path in attachments:
-            encoded_attachments.append(prepare_attachment(file_path))
+        for file in attachments:
+            download_file(filesDict[file], file)
+            encoded_attachments.append(prepare_attachment(file))
         message["attachments"] = encoded_attachments
 
     email_msg = {"message": message, "saveToSentItems": "true"}
@@ -98,6 +105,10 @@ def send_email(token, recipients, subject, body, attachments=None, html=True):
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     response = requests.post(url, headers=headers, json=email_msg)
 
+    if attachments:
+        for file in attachments:
+            cleanup_file(file)
+    
     if response.status_code == 202:
         print("✅ Email sent successfully!")
         return True
