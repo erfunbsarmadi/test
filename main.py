@@ -11,20 +11,34 @@ creds_file = "credentials.json"
 df = read_sheet(sheet_id, "Sheet1!1:1000", creds_file)
 
 
-token = get_token()
+
 
 #prepare email
-clarity_check_result = 'Negative'
-while clarity_check_result != 'Positive':
-    df['Email Body'][0]=compose_email(df['Professor Name'][0], df['Abstract'][0])
-    clarity_check_result = clarity_check(df['Email Body'][0])
-    print(clarity_check_result)
+i=0
+if df['Last Email Sent'][i] == '':
+    clarity_check_result = 'Negative'
+    while clarity_check_result != 'Positive':
+        lastName = df['Professor Name'][i]
+        abstract = df['Abstract'][i]
+        text = compose_email(lastName, abstract)
+        clarity_check_result = clarity_check(text)
+        print(clarity_check_result)
+    df['Email Body'][i] = text
+    
+    clarity_check_result = 'Negative'
+    while clarity_check_result != 'Positive':
+        emailBody = df['Email Body'][i]
+        text = suggest_subject(emailBody)
+        clarity_check_result = clarity_check(text)
+        print(clarity_check_result)
+    df['Subject'][i] = text
+    
+    token = get_token()
+    recipient = df['Email'][i]
+    subject = df['Subject'][i]
+    body = df['Email Body'][i]
+    send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts'])
 
-clarity_check_result = 'Negative'
-while clarity_check_result != 'Positive':
-    df['Subject'][0]=suggest_subject(df['Email Body'][0])
-    clarity_check_result = clarity_check(df['Subject'][0])
-    print(clarity_check_result)
 
 #check email
 #suggest subject
