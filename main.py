@@ -74,6 +74,9 @@ elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Dat
             date = date + datetime.timedelta(days=delta)
             if date.weekday() < 6:
                 break
+            else:
+                delta = -1 * delta
+                date = date + datetime.timedelta(days=delta)
 
         df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
 
