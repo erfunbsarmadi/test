@@ -100,8 +100,10 @@ def send_email(token, recipients, subject, body, attachments=None, html=True):
 
     if response.status_code == 202:
         print("✅ Email sent successfully!")
+        return 1
     else:
         print("❌ Failed:", response.status_code, response.text)
+        return 0
 
 # --------------------------
 # Test
