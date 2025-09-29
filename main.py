@@ -68,8 +68,11 @@ elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Dat
         df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
         df['Email Body'][i] = 'Reminder ' + df['Reminders Sent'][i] + ':\n' + text
         
-        delta = randint(7,14)
-        date = date + datetime.timedelta(days=delta)
+        while True:
+            delta = randint(7,14)
+            date = date + datetime.timedelta(days=delta)
+            if date.weekday() < 6:
+                break
 
         df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
 
