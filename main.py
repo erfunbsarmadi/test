@@ -38,7 +38,8 @@ if df['Last Email Sent'][i] == '':
     recipient = df['Email'][i]
     subject = df['Subject'][i]
     body = df['Email Body'][i]
-    if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+ #   if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+    if True:
         date = datetime.datetime.now()
         df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
         df['Email Body'][i] = 'First Email:\n' + df['Email Body'][i]
@@ -60,7 +61,8 @@ elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Dat
     recipient = df['Email'][i]
     subject = 'Reminder: ' + df['Subject'][i]
     body = text
-    if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+  #  if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+    if True:
         date = datetime.datetime.now()
         df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
         df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
