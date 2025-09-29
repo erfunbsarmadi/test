@@ -1,7 +1,7 @@
 from sheet_helper import read_sheet, write_sheet
 from outlook_mailer import get_token, send_email
 from gdrive_helper import download_file, cleanup_file
-from gemini_helper import compose_email, suggest_subject, clarity_check
+from gemini_helper import compose_email, suggest_subject, clarity_check, compose_reminder
 import pandas as pd
 import datetime
 from random import randint
@@ -40,15 +40,37 @@ if df['Last Email Sent'][i] == '':
     subject = df['Subject'][i]
     body = df['Email Body'][i]
     if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
-        body = df['Email Body'][i]
         date = datetime.datetime.now()
         df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
-
+        df['Email Body'][i] = 'First Email:\n' + df['Email Body'][i]
+        
         delta = randint(7,14)
         date = date + datetime.timedelta(days=delta)
 
         df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
 
+elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and df['Reminders Sent'][i] < 5:
+    clarity_check_result = 'Negative'
+    while clarity_check_result != 'Positive':
+        emailBody = df['Email Body'][i]
+        text = compose_reminder(emailBody)
+        clarity_check_result = clarity_check(text)
+        print(clarity_check_result)
+
+    token = get_token()
+    recipient = df['Email'][i]
+    subject = 'Reminder: ' + df['Subject'][i]
+    body = text
+    if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+        date = datetime.datetime.now()
+        df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
+        df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
+        df['Email Body'][i] = 'Reminder ' + df['Reminders Sent'][i] + ':\n' + text
+        
+        delta = randint(7,14)
+        date = date + datetime.timedelta(days=delta)
+
+        df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
 
 #check email
 #suggest subject
