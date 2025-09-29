@@ -10,7 +10,8 @@ sheet_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
 creds_file = "credentials.json"
 
 df = read_sheet(sheet_id, "Sheet1!1:1000", creds_file)
-
+df['Reminders Sent'] = df['Reminders Sent'].astype(int)
+df['Replied'] = df['Replied'].astype(int)
 
 
 
@@ -49,7 +50,7 @@ if df['Last Email Sent'][i] == '':
 
         df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
 
-elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and int(df['Reminders Sent'][i]) < 5 and int(df['Replied'][i]) == 0:
+elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and df['Reminders Sent'][i] < 5 and df['Replied'][i] == 0:
     clarity_check_result = 'Negative'
     while clarity_check_result != 'Positive':
         emailBody = df['Email Body'][i]
@@ -66,7 +67,7 @@ elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Dat
         date = datetime.datetime.now()
         df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
         df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
-        df['Email Body'][i] = 'Reminder ' + df['Reminders Sent'][i] + ':\n' + text
+        df['Email Body'][i] = 'Reminder ' + str(df['Reminders Sent'][i]) + ':\n' + text
         
         while True:
             delta = randint(7,14)
