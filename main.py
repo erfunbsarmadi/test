@@ -37,7 +37,7 @@ if df['Last Email Sent'][i] == '':
     recipient = df['Email'][i]
     subject = df['Subject'][i]
     body = df['Email Body'][i]
-    send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts'])
+    #send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts'])
 
 
 #check email
