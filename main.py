@@ -3,6 +3,8 @@ from outlook_mailer import get_token, send_email
 from gdrive_helper import download_file, cleanup_file
 from gemini_helper import compose_email, suggest_subject, clarity_check
 import pandas as pd
+import datetime
+from random import randint
 
 # --- Setup ---
 sheet_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
@@ -37,7 +39,15 @@ if df['Last Email Sent'][i] == '':
     recipient = df['Email'][i]
     subject = df['Subject'][i]
     body = df['Email Body'][i]
-    #send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts'])
+    if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+        body = df['Email Body'][i]
+        date = datetime.datetime.now()
+        df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
+
+        delta = randint(7,14)
+        date = date + datetime.timedelta(days=delta)
+
+        df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
 
 
 #check email
