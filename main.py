@@ -49,7 +49,7 @@ if df['Last Email Sent'][i] == '':
 
         df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
 
-elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and int(df['Reminders Sent'][i]) < 5 and df['Replied'][i] == 0:
+elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and int(df['Reminders Sent'][i]) < 5 and int(df['Replied'][i]) == 0:
     clarity_check_result = 'Negative'
     while clarity_check_result != 'Positive':
         emailBody = df['Email Body'][i]
