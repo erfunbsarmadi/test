@@ -90,7 +90,7 @@ def send_email(token, recipients, subject, body, attachments=None, html=True):
     filesDict = {
         "CV": "1zvBoRn_5hlhoiSuhptqtD6CdrgxlAryg",
         "BSc Transcripts": "1V7eAd-WWpMCW-NDVbapzKUubyCAzLOZH",
-        "MSc Transcripts": "1KVpM6FPe9c1saYdtLA89CLvjq_U76YZR",
+        "MSc Transcripts": "1_xwuKoDgdJzUWyQXQJKhlZzGk-2PsU8-",
     }
 
     if attachments:
