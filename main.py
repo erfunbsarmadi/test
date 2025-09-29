@@ -1,6 +1,5 @@
 from sheet_helper import read_sheet, write_sheet
 from outlook_mailer import get_token, send_email
-from gdrive_helper import download_file, cleanup_file
 from gemini_helper import compose_email, suggest_subject, clarity_check, compose_reminder
 import pandas as pd
 import datetime
