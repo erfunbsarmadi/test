@@ -2,8 +2,14 @@ import requests
 import json
 import os
 
-def get_updates(token, updateID):
-    url = f"https://api.telegram.org/bot{token}/getUpdates?offset={updateID}"
+def get_updates():
+    BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+    file = open("update_id.txt","rw")
+    updateID = int(file.read())
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates?offset={updateID}"
+    updateID = updateID + 1
+    file.write(updateID)
+    file.close()
     response = requests.get(url)
     
     # Raise an error if something went wrong
@@ -13,8 +19,9 @@ def get_updates(token, updateID):
     updates = response.json()
     return updates
 
-def send_message(token, chatID, text, parse_mode = 'HTML'):
-    url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chatID}&text={text}&parse_mode={parse_mode}"
+def send_message(text, chatID = 256684990, parse_mode = 'HTML'):
+    BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={chatID}&text={text}&parse_mode={parse_mode}"
     response = requests.get(url)
     
     # Raise an error if something went wrong
@@ -26,9 +33,6 @@ def send_message(token, chatID, text, parse_mode = 'HTML'):
 
 if __name__ == "__main__":
     # Replace with your bot token
-    BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
-    updateID = 355402220
-    chatID = 256684990
     text = '''<b>bold</b>, <strong>bold</strong>
 <i>italic</i>, <em>italic</em>
 <u>underline</u>, <ins>underline</ins>
@@ -44,10 +48,10 @@ if __name__ == "__main__":
 <blockquote>Block quotation started\nBlock quotation continued\nThe last line of the block quotation</blockquote>
 <blockquote expandable>Expandable block quotation started\nExpandable block quotation continued\nExpandable block quotation continued\nHidden by default part of the block quotation started\nExpandable block quotation continued\nThe last line of the block quotation</blockquote>'''
 
-    updates = get_updates(BOT_TOKEN, updateID)
+    updates = get_updates()
     
     # Pretty print JSON
     print(json.dumps(updates, indent=4, ensure_ascii=False))
 
-    updates = send_message(BOT_TOKEN, chatID, text)
+    updates = send_message(text)
     print(json.dumps(updates, indent=4, ensure_ascii=False))
