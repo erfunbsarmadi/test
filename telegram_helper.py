@@ -16,7 +16,7 @@ def get_updates(token):
 
 if __name__ == "__main__":
     # Replace with your bot token
-    BOT_TOKEN = os.getenv()
+    BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
     
     updates = get_updates(BOT_TOKEN)
     
