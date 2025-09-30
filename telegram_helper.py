@@ -8,7 +8,7 @@ def get_updates():
     updateID = int(file.read())
     file.close()
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates?offset={updateID}"
-    updateID = updateID + 1
+    updateID = str(updateID + 1)
     file = open("update_id.txt","w")
     file.write(updateID)
     file.close()
