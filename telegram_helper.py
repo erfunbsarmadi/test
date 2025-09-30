@@ -46,21 +46,30 @@ def get_updates():
 def send_message(text, chatID = 256684990, parse_mode = 'HTML'):
     BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 
-    keyboard = {
-        "inline_keyboard": [
-            [{"text": "✅ Approve & Send", "callback_data": "approve"}],
-            [{"text": "✍️ Rewrite", "callback_data": "rewrite"}]
-        ]
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+
+    payload = {
+        "chat_id": chatID,
+        "text": text,
+        "parse_mode": parse_mode,
+        "reply_markup": {
+            "inline_keyboard": [
+                [{"text": "✅ Approve & Send", "callback_data": "approve"}],
+                [{"text": "✍️ Rewrite", "callback_data": "rewrite"}]
+            ]
+        }
     }
+
+    response = requests.post(url, json=payload)
     
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={chatID}&text={text}&reply_markup={keyboard}&parse_mode={parse_mode}"
-    response = requests.get(url)
+    #url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={chatID}&text={text}&reply_markup={keyboard}&parse_mode={parse_mode}"
+    #response = requests.get(url)
     
     # Raise an error if something went wrong
-    response.raise_for_status()
+    #response.raise_for_status()
     
     # Parse JSON response
-    response = response.json()
+    #response = response.json()
     return response
 
 if __name__ == "__main__":
