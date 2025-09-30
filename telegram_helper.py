@@ -7,11 +7,9 @@ def get_updates():
     file = open("update_id.txt","r")
     updateID = int(file.read())
     file.close()
+    
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates?offset={updateID}"
-    updateID = str(updateID + 1)
-    file = open("update_id.txt","w")
-    file.write(updateID)
-    file.close()
+
     response = requests.get(url)
     
     # Raise an error if something went wrong
@@ -19,6 +17,13 @@ def get_updates():
     
     # Parse JSON response
     updates = response.json()
+
+    updateID = str(updates["result"][-1]["update_id"] + 1)
+    file = open("update_id.txt","w")
+    file.write(updateID)
+    file.close()
+    print(updateID)
+    
     return updates
 
 def send_message(text, chatID = 256684990, parse_mode = 'HTML'):
@@ -27,11 +32,11 @@ def send_message(text, chatID = 256684990, parse_mode = 'HTML'):
     response = requests.get(url)
     
     # Raise an error if something went wrong
-    #response.raise_for_status()
+    response.raise_for_status()
     
     # Parse JSON response
-    updates = response.json()
-    return updates
+    response = response.json()
+    return response
 
 if __name__ == "__main__":
     # Replace with your bot token
