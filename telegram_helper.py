@@ -75,7 +75,6 @@ if __name__ == "__main__":
     updates = get_updates()
     
     # Pretty print JSON
-    #print(json.dumps(updates, indent=4, ensure_ascii=False))
+    print(json.dumps(updates, indent=4, ensure_ascii=False))
 
     updates = send_message(text)
-    #print(json.dumps(updates, indent=4, ensure_ascii=False))
