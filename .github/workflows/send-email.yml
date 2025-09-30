@@ -40,6 +40,18 @@ jobs:
           echo "$MSAL_CACHE_JSON" > msal_cache.json
           echo "$NEW_GMAIL_CREDENTIALS_JSON" > credentials.json
 
+          # snippet: include this before your "Send email and process files" step
+      - name: Restore Telegram update_id cache
+        uses: actions/cache@v4
+        id: updateid-cache
+        with:
+          path: update_id.txt
+          # Unique key per run so saving always happens on cache-miss
+          key: telegram-update-${{ runner.os }}-v1-${{ github.run_number }}
+          # Fallback: restore the most recent cache that starts with this prefix
+          restore-keys: |
+            telegram-update-${{ runner.os }}-v1-
+
       - name: Send email and process files
         run: |
           #python main.py
