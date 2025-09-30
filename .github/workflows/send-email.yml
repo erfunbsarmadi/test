@@ -21,7 +21,6 @@ jobs:
       COMPOSE_REMINDER: ${{ secrets.COMPOSE_REMINDER }}
       CLARITY_PROMPT: ${{ secrets.CLARITY_PROMPT }}
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-      UPDATE_ID: ${{ variables.UPDATE_ID }}
 
     steps:
       - uses: actions/checkout@v4
