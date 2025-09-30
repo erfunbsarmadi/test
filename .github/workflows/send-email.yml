@@ -20,6 +20,7 @@ jobs:
       SUBJECT_SUGGESTION: ${{ secrets.SUBJECT_SUGGESTION }}
       COMPOSE_REMINDER: ${{ secrets.COMPOSE_REMINDER }}
       CLARITY_PROMPT: ${{ secrets.CLARITY_PROMPT }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
@@ -39,4 +40,6 @@ jobs:
           echo "$NEW_GMAIL_CREDENTIALS_JSON" > credentials.json
 
       - name: Send email and process files
-        run: python main.py
+        run: |
+          #python main.py
+          python telegram_helper.py
