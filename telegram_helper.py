@@ -37,6 +37,7 @@ def get_updates():
     # Parse JSON response
     updates = response.json()
 
+    print(json.dumps(updates, indent=4, ensure_ascii=False))
     write_update_id(updates["result"][-1]["update_id"] + 1)
     
     return updates
