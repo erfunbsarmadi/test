@@ -43,8 +43,10 @@ if __name__ == "__main__":
 <pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
 <blockquote>Block quotation started\nBlock quotation continued\nThe last line of the block quotation</blockquote>
 <blockquote expandable>Expandable block quotation started\nExpandable block quotation continued\nExpandable block quotation continued\nHidden by default part of the block quotation started\nExpandable block quotation continued\nThe last line of the block quotation</blockquote>'''
-    
+
     updates = get_updates(BOT_TOKEN, updateID)
     
     # Pretty print JSON
     print(json.dumps(updates, indent=4, ensure_ascii=False))
+
+    send_message(token, chatID, text)
