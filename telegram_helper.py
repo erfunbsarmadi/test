@@ -2,10 +2,26 @@ import requests
 import json
 import os
 
+def read_update_id():
+    # If not present, initialize to 0
+    UPDATE_FILE = "update_id.txt"
+    if not os.path.exists(UPDATE_FILE):
+        with open(UPDATE_FILE, "w") as f:
+            f.write("0")
+        return 0
+    with open(UPDATE_FILE, "r") as f:
+        s = f.read().strip()
+        return int(s) if s.isdigit() else 0
+
+def write_update_id(value: int):
+    UPDATE_FILE = "update_id.txt"
+    with open(UPDATE_FILE, "w") as f:
+        f.write(str(value))
+
 def get_updates():
     BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
     file = open("update_id.txt","r")
-    updateID = int(file.read())
+    updateID = read_update_id()
     file.close()
     
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates?offset={updateID}"
@@ -18,11 +34,7 @@ def get_updates():
     # Parse JSON response
     updates = response.json()
 
-    updateID = str(updates["result"][-1]["update_id"] + 1)
-    file = open("update_id.txt","w")
-    file.write(updateID)
-    file.close()
-    print(updateID)
+    write_update_id(updates["result"][-1]["update_id"] + 1)
     
     return updates
 
