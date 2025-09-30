@@ -4,6 +4,7 @@ from gemini_helper import compose_email, suggest_subject, clarity_check, compose
 import pandas as pd
 import datetime
 from random import randint
+from telegram_helper import get_updates, send_message
 
 # --- Setup ---
 sheet_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
