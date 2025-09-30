@@ -14,7 +14,7 @@ def get_updates(token, updateID):
     return updates
 
 def send_message(token, chatID, text, parse_mode = 'HTML'):
-    url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chatID}&text={text},parse_mode={parse_mode}"
+    url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chatID}&text={text}&parse_mode={parse_mode}"
     response = requests.get(url)
     
     # Raise an error if something went wrong
