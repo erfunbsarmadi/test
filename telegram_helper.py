@@ -45,7 +45,15 @@ def get_updates():
 
 def send_message(text, chatID = 256684990, parse_mode = 'HTML'):
     BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
-    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={chatID}&text={text}&parse_mode={parse_mode}"
+
+    keyboard = {
+        "inline_keyboard": [
+            [{"text": "✅ Approve & Send", "callback_data": "approve"}],
+            [{"text": "✍️ Rewrite", "callback_data": "rewrite"}]
+        ]
+    }
+    
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={chatID}&text={text}&reply_markup={keyboard}&parse_mode={parse_mode}"
     response = requests.get(url)
     
     # Raise an error if something went wrong
