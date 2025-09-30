@@ -8,15 +8,18 @@ def read_update_id():
     if not os.path.exists(UPDATE_FILE):
         with open(UPDATE_FILE, "w") as f:
             f.write("0")
+            f.close()
         return 0
     with open(UPDATE_FILE, "r") as f:
         s = f.read().strip()
+        f.close()
         return int(s) if s.isdigit() else 0
 
 def write_update_id(value: int):
     UPDATE_FILE = "update_id.txt"
     with open(UPDATE_FILE, "w") as f:
         f.write(str(value))
+        f.close()
 
 def get_updates():
     BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
