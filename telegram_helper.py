@@ -37,5 +37,5 @@ if __name__ == "__main__":
     # Pretty print JSON
     print(json.dumps(updates, indent=4, ensure_ascii=False))
 
-    updates = send_message(token, chatID, text)
+    updates = send_message(BOT_TOKEN, chatID, text)
     print(json.dumps(updates, indent=4, ensure_ascii=False))
