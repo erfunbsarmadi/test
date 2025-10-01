@@ -56,7 +56,13 @@ def get_updates():
                 if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
                     date = datetime.datetime.now()
                     df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
-                    df['Email Body'][i] = 'First Email:\n' + df['Email Body'][i]
+                    df['Subject'][i] = subject
+                    
+                    if df['Last Email Sent'][i] == '':
+                        df['Email Body'][i] = 'First Email:\n' + body
+                    else:
+                        df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
+                        df['Email Body'][i] = df['Email Body'][i] + '\n\nReminder ' + str(df['Reminders Sent'][i]) + ':\n' + body
                     
                     while True:
                         delta = randint(7,14)
