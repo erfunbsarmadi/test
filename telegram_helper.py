@@ -44,7 +44,7 @@ def get_updates(df):
         write_update_id(updates["result"][-1]["update_id"] + 1)
 
     token = get_token()
-    for update in updates[result]:
+    for update in updates["result"]:
         try:
             if update["callback_query"]["date"] == "approve":
                 text = update["callback_query"]["message"]["text"]
