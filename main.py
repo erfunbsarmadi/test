@@ -18,7 +18,7 @@ df['Replied'] = df['Replied'].astype(int)
 
 #prepare email
 i = 0
-if df['Last Email Sent'][i] == '':
+if df['Last Email Sent'][i] == '' and df['Status'][i] != 'Under Review':
     lastName = df['Professor Name'][i]
     abstract = df['Abstract'][i]
     body = compose_email(lastName, abstract)
