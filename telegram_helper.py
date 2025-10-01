@@ -44,7 +44,25 @@ def get_updates():
     for update in updates[result]:
         try:
             if update["callback_query"]["date"] == "approve":
-                pass
+                text = update["callback_query"]["message"]["text"]
+                text = text.split('\n')
+                
+                i = text[0]
+                subject = text[1]
+                body = text[2]
+                recipient = df['Email'][i]
+
+                token = get_token()
+                if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+                    date = datetime.datetime.now()
+                    df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
+                    df['Email Body'][i] = 'First Email:\n' + df['Email Body'][i]
+                    
+                    delta = randint(7,14)
+                    date = date + datetime.timedelta(days=delta)
+            
+                    df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
+                
             elif update["callback_query"]["date"] == "rewrite":
                 pass
         except:
