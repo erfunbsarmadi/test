@@ -17,7 +17,7 @@ df['Replied'] = df['Replied'].astype(int)
 
 
 #prepare email
-i=0
+i = 0
 if df['Last Email Sent'][i] == '':
     #clarity_check_result = 'Negative'
     #while clarity_check_result != 'Positive':
@@ -41,6 +41,17 @@ if df['Last Email Sent'][i] == '':
     #subject = df['Subject'][i]
     #body = df['Email Body'][i]
  #   if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+    lastName = df['Professor Name'][i]
+    abstract = df['Abstract'][i]
+    body = compose_email(lastName, abstract)
+    subject = suggest_subject(emailBody)
+    text = f'''
+    index = {i}\n
+    Subject : {subject}\n
+    Email Body :\n
+    {body}'''
+    send_message(text)
+    
     if True:
         date = datetime.datetime.now()
         df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
