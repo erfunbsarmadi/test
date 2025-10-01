@@ -45,43 +45,44 @@ def get_updates(df):
 
     token = get_token()
     for update in updates["result"]:
-        try:
-            if update["callback_query"]["date"] == "approve":
-                text = update["callback_query"]["message"]["text"]
-                parts = text.split('\n')
-                
-                i = parts[0]
-                subject = parts[1]
-                body = text[text.find(parts[2]):]
-                recipient = df['Email'][i]
-
-                #if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
-                if True:
-                    date = datetime.datetime.now()
-                    df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
-                    df['Subject'][i] = subject
-                    
-                    if df['Last Email Sent'][i] == '':
-                        df['Email Body'][i] = 'First Email:\n' + body
-                    else:
-                        df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
-                        df['Email Body'][i] = df['Email Body'][i] + '\n\nReminder ' + str(df['Reminders Sent'][i]) + ':\n' + body
-                    
-                    while True:
-                        delta = randint(7,14)
-                        date = date + datetime.timedelta(days=delta)
-                        if date.weekday() < 6:
-                            break
-                        else:
-                            delta = -1 * delta
-                            date = date + datetime.timedelta(days=delta)
+        #try:
+        if update["callback_query"]["date"] == "approve":
+            text = update["callback_query"]["message"]["text"]
+            parts = text.split('\n')
             
-                    df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
+            i = parts[0]
+            subject = parts[1]
+            body = text[text.find(parts[2]):]
+            recipient = df['Email'][i]
+
+            #if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+            if True:
+                df['Subject'][i] = subject
                 
-            elif update["callback_query"]["date"] == "rewrite":
-                pass
-        except:
-            continue
+                if df['Last Email Sent'][i] == '':
+                    df['Email Body'][i] = 'First Email:\n' + body
+                else:
+                    df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
+                    df['Email Body'][i] = df['Email Body'][i] + '\n\nReminder ' + str(df['Reminders Sent'][i]) + ':\n' + body
+
+                date = datetime.datetime.now()
+                df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
+                
+                while True:
+                    delta = randint(7,14)
+                    date = date + datetime.timedelta(days=delta)
+                    if date.weekday() < 6:
+                        break
+                    else:
+                        delta = -1 * delta
+                        date = date + datetime.timedelta(days=delta)
+        
+                df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
+            
+        elif update["callback_query"]["date"] == "rewrite":
+            pass
+        #except:
+            #continue
     
     return df
 
