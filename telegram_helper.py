@@ -58,8 +58,14 @@ def get_updates():
                     df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
                     df['Email Body'][i] = 'First Email:\n' + df['Email Body'][i]
                     
-                    delta = randint(7,14)
-                    date = date + datetime.timedelta(days=delta)
+                    while True:
+                        delta = randint(7,14)
+                        date = date + datetime.timedelta(days=delta)
+                        if date.weekday() < 6:
+                            break
+                        else:
+                            delta = -1 * delta
+                            date = date + datetime.timedelta(days=delta)
             
                     df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
                 
