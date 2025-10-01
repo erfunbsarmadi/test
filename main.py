@@ -18,7 +18,7 @@ df['Replied'] = df['Replied'].astype(int)
 
 #prepare email
 i = 0
-if df['Last Email Sent'][i] == '' and datetime.datetime.now().weekday() < 6:
+if df['Last Email Sent'][i] == '':
     lastName = df['Professor Name'][i]
     abstract = df['Abstract'][i]
     body = compose_email(lastName, abstract)
@@ -35,7 +35,8 @@ Email Body :\n
 {body}'''
 send_message(text)
 
-
+if datetime.datetime.now().weekday() < 6:
+    df = get_updates(df)
 
 write_sheet(sheet_id, 'Sheet1!A1', df, creds_file)
 #cleanup_file('cv.pdf')
