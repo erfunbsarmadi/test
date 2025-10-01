@@ -19,27 +19,27 @@ df['Replied'] = df['Replied'].astype(int)
 #prepare email
 i=0
 if df['Last Email Sent'][i] == '':
-    clarity_check_result = 'Negative'
-    while clarity_check_result != 'Positive':
-        lastName = df['Professor Name'][i]
-        abstract = df['Abstract'][i]
-        text = compose_email(lastName, abstract)
-        clarity_check_result = clarity_check(text)
-        print(clarity_check_result)
-    df['Email Body'][i] = text
+    #clarity_check_result = 'Negative'
+    #while clarity_check_result != 'Positive':
+    #    lastName = df['Professor Name'][i]
+    #    abstract = df['Abstract'][i]
+    #    text = compose_email(lastName, abstract)
+    #    clarity_check_result = clarity_check(text)
+    #    print(clarity_check_result)
+    #df['Email Body'][i] = text
     
-    clarity_check_result = 'Negative'
-    while clarity_check_result != 'Positive':
-        emailBody = df['Email Body'][i]
-        text = suggest_subject(emailBody)
-        clarity_check_result = clarity_check(text)
-        print(clarity_check_result)
-    df['Subject'][i] = text
+    #clarity_check_result = 'Negative'
+    #while clarity_check_result != 'Positive':
+    #    emailBody = df['Email Body'][i]
+    #    text = suggest_subject(emailBody)
+    #    clarity_check_result = clarity_check(text)
+    #    print(clarity_check_result)
+    #df['Subject'][i] = text
     
-    token = get_token()
-    recipient = df['Email'][i]
-    subject = df['Subject'][i]
-    body = df['Email Body'][i]
+    #token = get_token()
+    #recipient = df['Email'][i]
+    #subject = df['Subject'][i]
+    #body = df['Email Body'][i]
  #   if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
     if True:
         date = datetime.datetime.now()
