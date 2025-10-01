@@ -41,6 +41,7 @@ def get_updates():
     if updates["result"]:
         write_update_id(updates["result"][-1]["update_id"] + 1)
 
+    token = get_token()
     for update in updates[result]:
         try:
             if update["callback_query"]["date"] == "approve":
@@ -52,7 +53,6 @@ def get_updates():
                 body = text[text.find(parts[2]):]
                 recipient = df['Email'][i]
 
-                token = get_token()
                 if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
                     date = datetime.datetime.now()
                     df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
