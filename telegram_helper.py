@@ -45,11 +45,11 @@ def get_updates():
         try:
             if update["callback_query"]["date"] == "approve":
                 text = update["callback_query"]["message"]["text"]
-                text = text.split('\n')
+                parts = text.split('\n')
                 
-                i = text[0]
-                subject = text[1]
-                body = text[2]
+                i = parts[0]
+                subject = parts[1]
+                body = text[text.find(parts[2]):]
                 recipient = df['Email'][i]
 
                 token = get_token()
