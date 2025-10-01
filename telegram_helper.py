@@ -50,9 +50,9 @@ def get_updates(df):
             text = update["callback_query"]["message"]["text"]
             parts = text.split('\n')
             
-            i = parts[0]
-            subject = parts[1]
-            body = text[text.find(parts[2]):]
+            i = int(parts[0][8:])
+            subject = parts[1][10:]
+            body = text[text.find(parts[2])+13:]
             recipient = df['Email'][i]
 
             #if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
