@@ -18,22 +18,23 @@ df['Replied'] = df['Replied'].astype(int)
 
 #prepare email
 i = 0
-if df['Last Email Sent'][i] == '' and df['Status'][i] != 'Under Review':
-    lastName = df['Professor Name'][i]
-    abstract = df['Abstract'][i]
-    body = compose_email(lastName, abstract)
-    subject = suggest_subject(body)
-
-elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and df['Reminders Sent'][i] < 5 and df['Replied'][i] == 0:    
-    body = compose_reminder(df['Email Body'][i])
-    subject = 'Reminder: ' + df['Subject'][i]
-
-text = f'''
-index = {i}\n
-Subject : {subject}\n
-Email Body :\n
-{body}'''
-send_message(text)
+if df['Status'][i] != 'Under Review':
+    if df['Last Email Sent'][i] == '':
+        lastName = df['Professor Name'][i]
+        abstract = df['Abstract'][i]
+        body = compose_email(lastName, abstract)
+        subject = suggest_subject(body)
+    
+    elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and df['Reminders Sent'][i] < 5 and df['Replied'][i] == 0:    
+        body = compose_reminder(df['Email Body'][i])
+        subject = 'Reminder: ' + df['Subject'][i]
+    
+    text = f'''
+    index = {i}\n
+    Subject : {subject}\n
+    Email Body :\n
+    {body}'''
+    send_message(text)
 
 if datetime.datetime.now().weekday() < 6:
     df = get_updates(df)
