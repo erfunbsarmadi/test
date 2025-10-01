@@ -55,7 +55,8 @@ def get_updates(df):
                 body = text[text.find(parts[2]):]
                 recipient = df['Email'][i]
 
-                if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+                #if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+                if True:
                     date = datetime.datetime.now()
                     df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
                     df['Subject'][i] = subject
