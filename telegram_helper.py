@@ -40,6 +40,15 @@ def get_updates():
     print(json.dumps(updates, indent=4, ensure_ascii=False))
     if updates["result"]:
         write_update_id(updates["result"][-1]["update_id"] + 1)
+
+    for update in updates[result]:
+        try:
+            if update["callback_query"]["date"] == "approve":
+                pass
+            elif update["callback_query"]["date"] == "rewrite":
+                pass
+        except:
+            continue
     
     return updates
 
