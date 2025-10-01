@@ -53,5 +53,4 @@ jobs:
 
       - name: Send email and process files
         run: |
-          #python main.py
-          python telegram_helper.py
+          python main.py
