@@ -46,7 +46,7 @@ def get_updates(df):
     token = get_token()
     for update in updates["result"]:
         #try:
-        if update["callback_query"]["date"] == "approve":
+        if update["callback_query"]["data"] == "approve":
             text = update["callback_query"]["message"]["text"]
             parts = text.split('\n')
             
