@@ -22,10 +22,10 @@ if df['Last Email Sent'][i] == '':
     lastName = df['Professor Name'][i]
     abstract = df['Abstract'][i]
     body = compose_email(lastName, abstract)
-    subject = suggest_subject(emailBody)
+    subject = suggest_subject(body)
 
 elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and df['Reminders Sent'][i] < 5 and df['Replied'][i] == 0:    
-    body = compose_reminder(emailBody)
+    body = compose_reminder(df['Email Body'][i])
     subject = 'Reminder: ' + df['Subject'][i]
 
 text = f'''
