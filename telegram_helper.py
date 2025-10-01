@@ -53,8 +53,8 @@ def get_updates(df):
             parts = text.split('\n')
             
             i = int(parts[0][8:])
-            subject = parts[1][10:]
-            body = text[text.find(parts[2])+13:]
+            subject = parts[1]
+            body = text[text.find(parts[2]):]
             recipient = df['Email'][i]
 
             #if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
