@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import pandas as pd
+from outlook_mailer import get_token, send_email
 
 def read_update_id():
     # If not present, initialize to 0
