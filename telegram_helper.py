@@ -83,7 +83,7 @@ def get_updates(df):
         except:
             continue
     
-    return pd
+    return df
 
 def send_message(text, chatID = 256684990, parse_mode = 'HTML'):
     BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
