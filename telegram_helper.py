@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import pandas as pd
 
 def read_update_id():
     # If not present, initialize to 0
@@ -21,7 +22,7 @@ def write_update_id(value: int):
         f.write(str(value))
         f.close()
 
-def get_updates():
+def get_updates(df):
     BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
     file = open("update_id.txt","r")
     updateID = read_update_id()
@@ -80,7 +81,7 @@ def get_updates():
         except:
             continue
     
-    return updates
+    return pd
 
 def send_message(text, chatID = 256684990, parse_mode = 'HTML'):
     BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
@@ -114,10 +115,5 @@ def send_message(text, chatID = 256684990, parse_mode = 'HTML'):
 if __name__ == "__main__":
     # Replace with your bot token
     text = '''hi'''
-
-    updates = get_updates()
-    
-    # Pretty print JSON
-    print(json.dumps(updates, indent=4, ensure_ascii=False))
 
     updates = send_message(text)
