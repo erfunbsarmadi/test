@@ -5,6 +5,7 @@ import pandas as pd
 import datetime
 from random import randint
 from telegram_helper import get_updates, send_message
+from time import sleep
 
 # --- Setup ---
 sheet_id = "1j3TazOWluMGJZRk9TweKadKpIaE00wZ7coSyjsjcMIQ"
@@ -17,22 +18,23 @@ df['Replied'] = df['Replied'].astype(int)
 
 
 #prepare email
-i = 0
-if df['Status'][i] != 'Under Review' and df['Status'][i] != 'Rewriting':
-    if df['Last Email Sent'][i] == '':
-        lastName = df['Professor Name'][i]
-        abstract = df['Abstract'][i]
-        body = compose_email(lastName, abstract)
-        subject = suggest_subject(body)
-    
-    elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and df['Reminders Sent'][i] < 5 and df['Replied'][i] == 0:    
-        body = compose_reminder(df['Email Body'][i])
-        subject = 'Reminder: ' + df['Subject'][i]
-    
-    text = f'''
-    index = {i}\n\nSubject : {subject}\n\nEmail Body :\n\n{body}'''
-    send_message(text)
-    df['Status'][i] = 'Under Review'
+for i in df.index:
+    if df['Status'][i] != 'Under Review' and df['Status'][i] != 'Rewriting':
+        if df['Last Email Sent'][i] == '':
+            lastName = df['Professor Name'][i]
+            abstract = df['Abstract'][i]
+            body = compose_email(lastName, abstract)
+            subject = suggest_subject(body)
+        
+        elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and df['Reminders Sent'][i] < 5 and df['Replied'][i] == 0:    
+            body = compose_reminder(df['Email Body'][i])
+            subject = 'Reminder: ' + df['Subject'][i]
+        
+        text = f'''
+        index = {i}\n\nSubject : {subject}\n\nEmail Body :\n\n{body}'''
+        send_message(text)
+        df['Status'][i] = 'Under Review'
+        sleep(60)
 
 if datetime.datetime.now().weekday() < 6:
     df = get_updates(df)
