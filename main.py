@@ -30,10 +30,7 @@ if df['Status'][i] != 'Under Review':
         subject = 'Reminder: ' + df['Subject'][i]
     
     text = f'''
-    index = {i}\n
-    Subject : {subject}\n
-    Email Body :\n
-    {body}'''
+    index = {i}\n\nSubject : {subject}\n\nEmail Body :\n\n{body}'''
     send_message(text)
     df['Status'][i] = 'Under Review'
 
