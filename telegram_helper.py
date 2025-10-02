@@ -31,13 +31,14 @@ def post_send_processing(i, subject, body, df):
     
     #if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
     if True:
-        df['Subject'][i] = subject
         
         if df['Last Email Sent'][i] == '':
             df['Email Body'][i] = 'First Email:\n' + body
+            df['Subject'][i] = subject
         else:
             df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
             df['Email Body'][i] = df['Email Body'][i] + '\n\nReminder ' + str(df['Reminders Sent'][i]) + ':\n' + body
+            df['Subject'][i] = subject[10:]
 
         date = datetime.datetime.now()
         df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
