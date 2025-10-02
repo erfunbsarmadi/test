@@ -76,11 +76,10 @@ def get_updates(df):
 
     for update in updates["result"]:
         if "callback_query" in update:
+            text = update["callback_query"]["message"]["text"]
+            parts = text.split('\n')
             i = int(parts[0][8:])
             if update["callback_query"]["data"] == "approve":
-                text = update["callback_query"]["message"]["text"]
-                parts = text.split('\n')
-                
                 subject = parts[1]
                 body = text[text.find(parts[2]):]
                 post_send_processing(i, subject, body)
