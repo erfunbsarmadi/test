@@ -35,6 +35,7 @@ if df['Status'][i] != 'Under Review':
     Email Body :\n
     {body}'''
     send_message(text)
+    df['Status'][i] = 'Under Review'
 
 if datetime.datetime.now().weekday() < 6:
     df = get_updates(df)
