@@ -25,7 +25,7 @@ def write_update_id(value: int):
         f.write(str(value))
         f.close()
 
-def post_send_processing(i, subject, body):
+def post_send_processing(i, subject, body, df):
     token = get_token()
     recipient = df['Email'][i]
     
@@ -82,7 +82,7 @@ def get_updates(df):
             if update["callback_query"]["data"] == "approve":
                 subject = parts[1]
                 body = text[text.find(parts[2]):]
-                post_send_processing(i, subject, body)
+                post_send_processing(i, subject, body, df)
                 
             elif update["callback_query"]["date"] == "rewrite":
                 df["Status"][i] = "Rewriting"
@@ -96,7 +96,7 @@ def get_updates(df):
                 if df["Status"][i] == "Rewriting" and update["message"]["reply_to_message"]["text"].split('\n')[0] == parts[0]:
                     subject = parts[1]
                     body = text[text.find(parts[2]):]
-                    post_send_processing(i, subject, body)
+                    post_send_processing(i, subject, body, df)
             except:
                 pass
     
