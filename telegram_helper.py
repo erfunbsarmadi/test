@@ -89,14 +89,17 @@ def get_updates(df):
                 df["Status"][i] = "Rewriting"
                 
         elif "message" in update:
-            text = update["message"]["text"]
-            parts = text.split('\n')
-
-            i = int(parts[0][8:])
-            if df["Status"][i] == "Rewriting" and update["message"]["reply_to_message"]["text"].split('\n')[0] == parts[0]:
-                subject = parts[1]
-                body = text[text.find(parts[2]):]
-                post_send_processing(i, subject, body)
+            try:
+                text = update["message"]["text"]
+                parts = text.split('\n')
+    
+                i = int(parts[0][8:])
+                if df["Status"][i] == "Rewriting" and update["message"]["reply_to_message"]["text"].split('\n')[0] == parts[0]:
+                    subject = parts[1]
+                    body = text[text.find(parts[2]):]
+                    post_send_processing(i, subject, body)
+            except:
+                pass
     
     return df
 
