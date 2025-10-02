@@ -18,7 +18,7 @@ df['Replied'] = df['Replied'].astype(int)
 
 #prepare email
 i = 0
-if df['Status'][i] != 'Under Review':
+if df['Status'][i] != 'Under Review' and df['Status'][i] != 'Rewriting':
     if df['Last Email Sent'][i] == '':
         lastName = df['Professor Name'][i]
         abstract = df['Abstract'][i]
