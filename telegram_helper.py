@@ -85,7 +85,7 @@ def get_updates(df):
                 body = text[text.find(parts[4])+14:]
                 post_send_processing(i, subject, body, df)
                 
-            elif update["callback_query"]["date"] == "rewrite":
+            elif update["callback_query"]["data"] == "rewrite":
                 df["Status"][i] = "Rewriting"
                 
         elif "message" in update:
