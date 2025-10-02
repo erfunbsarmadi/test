@@ -80,8 +80,8 @@ def get_updates(df):
             parts = text.split('\n')
             i = int(parts[0][8:])
             if update["callback_query"]["data"] == "approve":
-                subject = parts[1]
-                body = text[text.find(parts[2]):]
+                subject = parts[2]
+                body = text[text.find(parts[4]):]
                 post_send_processing(i, subject, body, df)
                 
             elif update["callback_query"]["date"] == "rewrite":
@@ -94,8 +94,8 @@ def get_updates(df):
     
                 i = int(parts[0][8:])
                 if df["Status"][i] == "Rewriting" and update["message"]["reply_to_message"]["text"].split('\n')[0] == parts[0]:
-                    subject = parts[1]
-                    body = text[text.find(parts[2]):]
+                    subject = parts[2]
+                    body = text[text.find(parts[4]):]
                     post_send_processing(i, subject, body, df)
             except:
                 pass
