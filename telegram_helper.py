@@ -80,6 +80,7 @@ def get_updates(df):
                         date = date + datetime.timedelta(days=delta)
         
                 df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
+                df['Status'][i] = 'Sent'
             
         elif update["callback_query"]["date"] == "rewrite":
             pass
