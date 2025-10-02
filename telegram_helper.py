@@ -25,6 +25,35 @@ def write_update_id(value: int):
         f.write(str(value))
         f.close()
 
+def post_send_processing(i, subject, body):
+    token = get_token()
+    recipient = df['Email'][i]
+    
+    #if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
+    if True:
+        df['Subject'][i] = subject
+        
+        if df['Last Email Sent'][i] == '':
+            df['Email Body'][i] = 'First Email:\n' + body
+        else:
+            df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
+            df['Email Body'][i] = df['Email Body'][i] + '\n\nReminder ' + str(df['Reminders Sent'][i]) + ':\n' + body
+
+        date = datetime.datetime.now()
+        df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
+        
+        while True:
+            delta = randint(7,14)
+            date = date + datetime.timedelta(days=delta)
+            if date.weekday() < 6:
+                break
+            else:
+                delta = -1 * delta
+                date = date + datetime.timedelta(days=delta)
+
+        df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
+        df['Status'][i] = 'Sent'
+
 def get_updates(df):
     BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
     file = open("update_id.txt","r")
@@ -41,51 +70,33 @@ def get_updates(df):
     # Parse JSON response
     updates = response.json()
 
-    print(json.dumps(updates, indent=4, ensure_ascii=False))
+    #print(json.dumps(updates, indent=4, ensure_ascii=False))
     if updates["result"]:
         write_update_id(updates["result"][-1]["update_id"] + 1)
 
-    token = get_token()
     for update in updates["result"]:
-        #try:
-        if update["callback_query"]["data"] == "approve":
-            text = update["callback_query"]["message"]["text"]
-            parts = text.split('\n')
-            
+        if "callback_query" in update:
             i = int(parts[0][8:])
-            subject = parts[1]
-            body = text[text.find(parts[2]):]
-            recipient = df['Email'][i]
-
-            #if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
-            if True:
-                df['Subject'][i] = subject
+            if update["callback_query"]["data"] == "approve":
+                text = update["callback_query"]["message"]["text"]
+                parts = text.split('\n')
                 
-                if df['Last Email Sent'][i] == '':
-                    df['Email Body'][i] = 'First Email:\n' + body
-                else:
-                    df['Reminders Sent'][i] = df['Reminders Sent'][i] + 1
-                    df['Email Body'][i] = df['Email Body'][i] + '\n\nReminder ' + str(df['Reminders Sent'][i]) + ':\n' + body
-
-                date = datetime.datetime.now()
-                df['Last Email Sent'][i] = date.strftime("%a %d/%b/%Y")
+                subject = parts[1]
+                body = text[text.find(parts[2]):]
+                post_send_processing(i, subject, body)
                 
-                while True:
-                    delta = randint(7,14)
-                    date = date + datetime.timedelta(days=delta)
-                    if date.weekday() < 6:
-                        break
-                    else:
-                        delta = -1 * delta
-                        date = date + datetime.timedelta(days=delta)
-        
-                df['Planned Reminder Date'][i] = date.strftime("%a %d/%b/%Y")
-                df['Status'][i] = 'Sent'
-            
-        elif update["callback_query"]["date"] == "rewrite":
-            pass
-        #except:
-            #continue
+            elif update["callback_query"]["date"] == "rewrite":
+                df["Status"][i] = "Rewriting"
+                
+        elif "message" in update:
+            text = update["message"]["text"]
+            parts = text.split('\n')
+
+            i = int(parts[0][8:])
+            if df["Status"][i] = "Rewriting" and update["message"]["reply_to_message"]["text"].split('\n')[0] == parts[0]:
+                subject = parts[1]
+                body = text[text.find(parts[2]):]
+                post_send_processing(i, subject, body)
     
     return df
 
