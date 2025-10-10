@@ -84,6 +84,8 @@ jobs:
           sed -i "s|.*cron:.*|$NEW_LINE|" $FILE
 
       - name: Commit and push new cron
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
