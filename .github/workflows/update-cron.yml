@@ -19,13 +19,11 @@ jobs:
           echo "minute=$MINUTE" >> $GITHUB_OUTPUT
           echo "New random time: $HOUR:$MINUTE"
 
-      - name: Update cron in send-email.yml
-        run: |
-          OLD_CRON=$(grep -E "cron:" .github/workflows/send-email.yml)
-          NEW_CRON="    - cron: \"${{ steps.random.outputs.minute }} ${{ steps.random.outputs.hour }} * * *\""
-          echo "Old cron: $OLD_CRON"
-          echo "New cron: $NEW_CRON"
-          sed -i "s|$OLD_CRON|$NEW_CRON|" .github/workflows/send-email.yml
+      - name: Update cron schedule using update-yaml
+        uses: rmeneely/update-yaml@v1
+        with:
+          infile: .github/workflows/send-email.yml
+          varlist: "on.schedule[0].cron=\"${{ steps.random.outputs.minute }} ${{ steps.random.outputs.hour }} * * *\""
 
       - name: Commit and push updated cron
         env:
@@ -33,13 +31,12 @@ jobs:
           TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           git config user.name "erfunbsarmadi"
-          git config user.email "erfanbs1380@gmail.com"
+          git config user.email "erfun@example.com"
 
           git add .github/workflows/send-email.yml
           git commit -m "Update cron schedule to random time" || echo "No changes to commit"
 
-          # Redefine remote with PAT to ensure correct authentication
+          # Ensure we use the PAT instead of the bot token
           git remote set-url origin https://x-access-token:${TOKEN}@github.com/${REPO}.git
 
-          # Push changes
           git push origin HEAD:main
