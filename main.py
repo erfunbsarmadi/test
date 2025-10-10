@@ -29,6 +29,9 @@ for i in df.index:
         elif datetime.datetime.now().strftime("%a %d/%b/%Y") == df['Planned Reminder Date'][i] and df['Reminders Sent'][i] < 5 and df['Replied'][i] == 0:    
             body = compose_reminder(df['Email Body'][i])
             subject = 'Reminder: ' + df['Subject'][i]
+
+        else:
+            continue
         
         text = f'''
         index = {i}\n\nSubject : {subject}\n\nEmail Body :\n\n{body}'''
