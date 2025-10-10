@@ -71,11 +71,14 @@ jobs:
 
       - name: Update cron in workflow
         run: |
-          OLD_CRON=$(grep -E "cron:" .github/workflows/send-email.yml)
-          NEW_CRON="    - cron: \"${{ steps.random.outputs.minute }} ${{ steps.random.outputs.hour }} * * *\""
-          echo "Old cron: $OLD_CRON"
-          echo "New cron: $NEW_CRON"
-          sed -i "s|$OLD_CRON|$NEW_CRON|" .github/workflows/send-email.yml
+          FILE=".github/workflows/send-email.yml"
+          OLD_LINE=$(grep -E "cron:" $FILE)
+          HOUR=${{ steps.random.outputs.hour }}
+          MINUTE=${{ steps.random.outputs.minute }}
+          NEW_LINE="    - cron: \"${MINUTE} ${HOUR} * * *\""
+          echo "Old cron: $OLD_LINE"
+          echo "New cron: $NEW_LINE"
+          sed -i "s|.*cron:.*|$NEW_LINE|" $FILE
 
       - name: Commit and push new cron
         run: |
