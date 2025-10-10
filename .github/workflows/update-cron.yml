@@ -28,9 +28,18 @@ jobs:
           sed -i "s|$OLD_CRON|$NEW_CRON|" .github/workflows/send-email.yml
 
       - name: Commit and push updated cron
+        env:
+          REPO: ${{ github.repository }}
+          TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
+          git config user.name "erfunbsarmadi"
+          git config user.email "erfanbs1380@gmail.com"
+
           git add .github/workflows/send-email.yml
-          git commit -m "Update cron schedule to random time" || echo "No changes"
-          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+          git commit -m "Update cron schedule to random time" || echo "No changes to commit"
+
+          # Redefine remote with PAT to ensure correct authentication
+          git remote set-url origin https://x-access-token:${TOKEN}@github.com/${REPO}.git
+
+          # Push changes
+          git push origin HEAD:main
