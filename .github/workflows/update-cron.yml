@@ -1,0 +1,36 @@
+name: Update Cron Schedule Randomly
+
+on:
+  workflow_dispatch:  # triggered by the first workflow
+
+jobs:
+  randomize-cron:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate random time
+        id: random
+        run: |
+          HOUR=$((RANDOM % 24))
+          MINUTE=$((RANDOM % 60))
+          echo "hour=$HOUR" >> $GITHUB_OUTPUT
+          echo "minute=$MINUTE" >> $GITHUB_OUTPUT
+          echo "New random time: $HOUR:$MINUTE"
+
+      - name: Update cron in send-email.yml
+        run: |
+          OLD_CRON=$(grep -E "cron:" .github/workflows/send-email.yml)
+          NEW_CRON="    - cron: \"${{ steps.random.outputs.minute }} ${{ steps.random.outputs.hour }} * * *\""
+          echo "Old cron: $OLD_CRON"
+          echo "New cron: $NEW_CRON"
+          sed -i "s|$OLD_CRON|$NEW_CRON|" .github/workflows/send-email.yml
+
+      - name: Commit and push updated cron
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .github/workflows/send-email.yml
+          git commit -m "Update cron schedule to random time" || echo "No changes"
+          git push https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }} HEAD:main
