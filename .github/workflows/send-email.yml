@@ -71,16 +71,16 @@ jobs:
 
       - name: Update cron in workflow
         run: |
-          OLD_CRON=$(grep -E "cron:" .github/workflows/main.yml)
+          OLD_CRON=$(grep -E "cron:" .github/workflows/send-email.yml)
           NEW_CRON="    - cron: \"${{ steps.random.outputs.minute }} ${{ steps.random.outputs.hour }} * * *\""
           echo "Old cron: $OLD_CRON"
           echo "New cron: $NEW_CRON"
-          sed -i "s|$OLD_CRON|$NEW_CRON|" .github/workflows/main.yml
+          sed -i "s|$OLD_CRON|$NEW_CRON|" .github/workflows/send-email.yml
 
       - name: Commit and push new cron
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add .github/workflows/main.yml
+          git add .github/workflows/send-email.yml
           git commit -m "Update cron schedule to random time"
           git push
