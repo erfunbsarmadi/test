@@ -26,7 +26,7 @@ def write_update_id(value: int):
         f.close()
 
 def post_send_processing(i, subject, body, df):
-    token = get_token()
+    #token = get_token()
     recipient = df['Email'][i]
     
     #if send_email(token, recipient, subject, body, attachments = ['CV', 'BSc Transcripts', 'MSc Transcripts']):
